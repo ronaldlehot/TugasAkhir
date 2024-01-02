@@ -4,6 +4,17 @@ include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
 ?>
+
+
+<style>
+td.text-center a.btn {
+    padding: 5px 10px; 
+    font-size: 12px; 
+}
+</style>
+
+
+
 <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb" style="background: transparent; padding:0px;">
@@ -16,7 +27,7 @@ include_once './includes/session.php';
     </div>
     <div class="col-md-6 text-right">
         <button onclick="location.href='upload-alternatif.php'" class="btn btn-success">Upload Data Excel</button>
-        <button onclick="location.href='alternatif-baru.php'" class="btn btn-success">Tambah Data</button>
+        <button onclick="location.href='penilaian-alternatif.php'" class="btn btn-success">Input Penilaian</button>
     </div>
 </div>
 <br />
@@ -50,7 +61,8 @@ include_once './includes/session.php';
                 <td><?php echo $row['id'] ?></td>
                 <td><?php echo $row['nama'] ?></td>
                 <!-- <td><?php echo $row['hasil_akhir'] ?></td> -->
-                <td class="text-center">
+                <td class="text-center"  >
+                    <a href="alternatif-detail.php?id=<?php echo $row['id'] ?>" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <a href="alternatif-ubah.php?id=<?php echo $row['nama'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <a href="alternatif-hapus.php?id=<?php echo $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                 </td>

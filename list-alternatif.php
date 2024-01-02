@@ -15,7 +15,7 @@ include_once './includes/session.php';
         <h5>Data Alternatif</h5>
     </div>
     <div class="col-md-6 text-right">
-        <button onclick="location.href='alternatif-baru.php'" class="btn btn-success">Tambah Data</button>
+        <button onclick="location.href='tambah-alternatif.php'" class="btn btn-success">Tambah Data</button>
     </div>
 </div>
 <br />
@@ -50,8 +50,8 @@ include_once './includes/session.php';
                 <td><?php echo $row['nama'] ?></td>
                 <!-- <td><?php echo $row['hasil_akhir'] ?></td> -->
                 <td class="text-center">
-                    <a href="alternatif-ubah.php?id=<?php echo $row['nama'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a href="alternatif-hapus.php?id=<?php echo $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    <a href="edit-listalternatif.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    <a href="hapus-listalternatif.php?id=<?php echo $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                 </td>
             </tr>
         <?php

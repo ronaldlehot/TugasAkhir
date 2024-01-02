@@ -96,6 +96,7 @@ require_once "./PHPExcel-1.8/Classes/PHPExcel.php";
                         <?php $k++;
                         } ?>
                         <button class="btn btn-danger" id="upload" type="submit"><span class="fas fa-upload"></span> Upload</button>
+                        <button type="button" onclick="location.href='alternatif.php'" class="btn btn-danger">Kembali</button>
                     </form>
                 <?php }
             ?>

@@ -22,9 +22,20 @@ include_once './includes/session.php';
             <th>Username</th>
             <th>Level</th>
             <th>Nama</th>
-            <th width="100px">Action</th>
+            <th width="100px">Aksi</th>
         </tr>
     </thead>
+
+    <tfoot>
+        <tr>
+            <th>No</th>
+            <th>Username</th>
+            <th>Level</th>
+            <th>Nama</th>
+            <th>Aksi</th>
+        </tr>
+    </tfoot>
+    
     <tbody>
 
     <?php

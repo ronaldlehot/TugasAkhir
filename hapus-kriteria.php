@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 
 include_once './includes/api.php';
 
