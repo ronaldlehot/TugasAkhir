@@ -7,7 +7,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>
-<script src="js/dataTables.responsive.min.js"></script>
+<!-- <script src="js/dataTables.responsive.min.js"></script> -->
 <script src="js/main.js"></script>
 <script src="js/highcharts.js"></script>
 <script src="js/exporting.js"></script>

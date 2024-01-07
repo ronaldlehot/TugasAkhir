@@ -92,6 +92,13 @@ function data_kriteria() {
     return @$q->fetchAll();
 }
 
+function data_kriteria_2() {
+    global $koneksi;
+    $q = $koneksi->prepare('SELECT * FROM kriteria');
+    $q->execute();
+    return @$q->fetchAll();
+}
+
 function data_pengguna() {
     global $koneksi;
     $q = $koneksi->prepare("SELECT * FROM pengguna p JOIN level l on p.level=l.id");

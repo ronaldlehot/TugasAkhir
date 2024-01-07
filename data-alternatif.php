@@ -7,7 +7,7 @@ include_once './includes/session.php';
 <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb" style="background: transparent; padding:0px;">
-            <li><a href="main.php" style="color: #333;">Home</a></li>
+            <li><a href="home.php" style="color: #333;">Home</a></li>
             <li class="text-success" style="font-weight: bold;">Data Alternatif</li>
         </ol>
     </div>
@@ -44,9 +44,9 @@ include_once './includes/session.php';
 <button class="btn btn-danger" onclick="location.href='proses-data.php'"><span class="fas fa-radiation"></span> Proses Data</button>
                 <?php
                 } else {
-                    if (count(data_kriteria()) < 1) echo '<div class="alert alert-dismissable alert-danger"><b>Data kriteria kosong</b>, silahkan hubungi Petugas.</div>';
-                    if (count(data_alternatif()) < 1) echo '<div class="alert alert-dismissable alert-danger"><b>Data alternatif kosong</b>, silahkan hubungi Petugas.</div>';
-                    if (!cek_valid_bobot()) echo '<div class="alert alert-dismissable alert-danger"><b>Perbadingan bobot kriteria tidak valid</b>, silahkan hubungi Pakar/Ahli.</div>';
+                    if (count(data_kriteria()) < 1) echo '<div class="alert alert-dismissable alert-danger"><b>Data kriteria kosong</b>, silahkan di isi terlebih dahulu.</div>';
+                    if (count(data_alternatif()) < 1) echo '<div class="alert alert-dismissable alert-danger"><b>Data alternatif kosong</b>, silahkan di isi terlebih dahulu.</div>';
+                    if (!cek_valid_bobot()) echo '<div class="alert alert-dismissable alert-danger"><b>Perbadingan bobot kriteria tidak valid</b></div>';
                 }
             ?>
     </div>
