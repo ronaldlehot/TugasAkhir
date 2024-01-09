@@ -7,10 +7,10 @@ include_once './includes/session.php';
 
 
 <style>
-td.text-center a.btn {
-    padding: 5px 10px; 
-    font-size: 12px; 
-}
+    td.text-center a.btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
 </style>
 
 
@@ -52,7 +52,7 @@ td.text-center a.btn {
     </tfoot>
 
     <tbody>
-    <?php
+        <?php
         $no = 1;
         foreach (data_alternatif() as $row) {
         ?>
@@ -61,9 +61,9 @@ td.text-center a.btn {
                 <td><?php echo $row['id'] ?></td>
                 <td><?php echo $row['nama'] ?></td>
                 <!-- <td><?php echo $row['hasil_akhir'] ?></td> -->
-                <td class="text-center"  >
+                <td class="text-center">
                     <a href="alternatif-detail.php?id=<?php echo $row['id'] ?>" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                    <a href="edit-alternatif.php?id=<?php echo $row['nama'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    <a href="edit-alternatif.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <!-- <a href="alternatif-hapus.php?id=<?php echo $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> -->
                 </td>
             </tr>
@@ -76,5 +76,3 @@ td.text-center a.btn {
 <?php
 include_once 'footer.php';
 ?>
-
-
