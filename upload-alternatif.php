@@ -55,10 +55,11 @@ require_once "./PHPExcel-1.8/Classes/PHPExcel.php";
                         foreach (data_kriteria() as $x) { //insert nilai alternatif ke setiap kriteria pada baris ke x
                             $_nilai = $worksheet->getCell($kriteria[$x[0]] . $baris)->getValue();
                             $_nilai = str_replace(',', '.', $_nilai);
-                            $q = $koneksi->prepare("INSERT INTO nilai_alternatif VALUE ('$_next_id', '{$x[0]}', '$_nilai')");
+                            $periode = date('Y'); // Ambil tahun saat ini sebagai nilai periode
+                            $q = $koneksi->prepare("INSERT INTO nilai_alternatif VALUE ('$_next_id', '{$x[0]}', '$_nilai', '$periode')");
                             $q->execute();
                         }
-                
+                        
                         $q = $koneksi->prepare("DELETE FROM tanggapan WHERE 1"); //hapus tanggapan
                         $q->execute();
                     }

@@ -72,7 +72,7 @@ arsort($hasil);
     ?>
     <table class="table table-bordered table-sm table-striped small">
         <tr class="text-center">
-            <th>Rangking</th><th>Alternatif</th><th>Nilai</th><th>Kesesuaian Pengguna</th>
+            <th>Rangking</th><th>Alternatif</th><th>Nilai</th> <th>Kesesuaian Pengguna</th>
         </tr>
         <?php
         $no = 1;

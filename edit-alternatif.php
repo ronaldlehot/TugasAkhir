@@ -1,6 +1,5 @@
 <?php
 
-use function PHPSTORM_META\type;
 
 include_once './includes/api.php';
 include_once 'header1.php';

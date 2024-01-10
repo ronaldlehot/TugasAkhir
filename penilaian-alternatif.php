@@ -6,10 +6,11 @@ include_once './includes/session.php';
 if (!empty($_POST)) {
     global $koneksi;
     // Periksa apakah nilai yang dibutuhkan ada dalam $_POST
-    if (isset($_POST['alternatif']) && isset($_POST['kriteria'])) {
+    if (isset($_POST['alternatif']) && isset($_POST['kriteria']) && isset($_POST['periode'])) {
         $alternatif = $_POST['alternatif'];
         $kriteria = $_POST['kriteria'];
         $id_kriteria = $_POST['id_kriteria'];
+        $periode = $_POST['periode']; // Ambil nilai periode dari form
 
         foreach ($id_kriteria as $key => $value) {
             // Lakukan pemeriksaan untuk memastikan data belum ada sebelumnya
@@ -21,23 +22,28 @@ if (!empty($_POST)) {
             if ($row['count'] > 0) {
                 echo "<script>alert('Data sudah ada!'); window.location='alternatif.php';</script>";
                 exit; // Hentikan proses penyimpanan
-                
             }
 
             // Jika data belum ada, lanjutkan proses penyimpanan
             $data = array(
                 'id_alternatif' => $alternatif,
                 'id_kriteria' => $value,
-                'nilai' => $kriteria[$key]
+                'nilai' => $kriteria[$key],
+                'periode' => $periode // Tambahkan nilai periode ke dalam data yang akan disimpan
             );
 
-            $sql = "INSERT INTO nilai_alternatif (alternatif, kriteria, nilai) VALUES ('{$data['id_alternatif']}', '{$data['id_kriteria']}', '{$data['nilai']}')";
+            $sql = "INSERT INTO nilai_alternatif (alternatif, kriteria, nilai, periode) VALUES (:id_alternatif, :id_kriteria, :nilai, :periode)";
             $stmt = $koneksi->prepare($sql);
+            $stmt->bindParam(':id_alternatif', $data['id_alternatif']);
+            $stmt->bindParam(':id_kriteria', $data['id_kriteria']);
+            $stmt->bindParam(':nilai', $data['nilai']);
+            $stmt->bindParam(':periode', $data['periode']);
             $stmt->execute();
         }
         header('Location: data-alternatif.php');
     }
 }
+
 
 ?>
 
@@ -69,6 +75,16 @@ if (!empty($_POST)) {
                         </select>
                     </div>
                 <?php endforeach; ?>
+
+                <div class="form-group">
+                    <label for="periode">Periode</label>
+                    <select class="form-control" name="periode">
+                        <option>---</option>
+                        <?php for ($i=2023; $i<=2040; $i++): ?>
+                          <option value="<?=$i?>"><?=$i?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
 
                 <button type="submit" class="btn btn-danger">Submit</button>
                 <button type="button" onclick="location.href='alternatif.php'" class="btn btn-danger">Kembali</button>
