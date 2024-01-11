@@ -3,14 +3,18 @@ include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
 
+
+
 if (!empty($_POST)) {
     global $koneksi;
     // Periksa apakah nilai yang dibutuhkan ada dalam $_POST
-    if (isset($_POST['alternatif']) && isset($_POST['kriteria']) && isset($_POST['periode'])) {
+    if (isset($_POST['alternatif']) && isset($_POST['kriteria']) && isset($_POST['periode']) ) {
         $alternatif = $_POST['alternatif'];
         $kriteria = $_POST['kriteria'];
         $id_kriteria = $_POST['id_kriteria'];
-        $periode = $_POST['periode']; // Ambil nilai periode dari form
+        $periode = $_POST['periode'];
+      
+
 
         foreach ($id_kriteria as $key => $value) {
             // Lakukan pemeriksaan untuk memastikan data belum ada sebelumnya
@@ -24,21 +28,34 @@ if (!empty($_POST)) {
                 exit; // Hentikan proses penyimpanan
             }
 
-            // Jika data belum ada, lanjutkan proses penyimpanan
+            // Jika data belum ada, lanjutkan proses penyimpanan kedalam kedua tabel (nilai_alternatif dan history)
             $data = array(
                 'id_alternatif' => $alternatif,
                 'id_kriteria' => $value,
                 'nilai' => $kriteria[$key],
                 'periode' => $periode // Tambahkan nilai periode ke dalam data yang akan disimpan
+
             );
 
-            $sql = "INSERT INTO nilai_alternatif (alternatif, kriteria, nilai, periode) VALUES (:id_alternatif, :id_kriteria, :nilai, :periode)";
+            //ambil data id alternatif dan periode dari array data dan simpan ke tabel histori
+            $alternatif = $data['id_alternatif'];
+            $periode = $data['periode'];
+            $sql = "INSERT INTO histori (alternatif, periode) VALUES (:id_alternatif, :periode)";
+            $stmt = $koneksi->prepare($sql);
+            $stmt->bindParam(':id_alternatif', $alternatif);
+            $stmt->bindParam(':periode', $periode);
+            $stmt->execute();
+
+            $sql = "INSERT INTO nilai_alternatif (alternatif, kriteria, nilai) VALUES (:id_alternatif, :id_kriteria, :nilai )";
             $stmt = $koneksi->prepare($sql);
             $stmt->bindParam(':id_alternatif', $data['id_alternatif']);
             $stmt->bindParam(':id_kriteria', $data['id_kriteria']);
             $stmt->bindParam(':nilai', $data['nilai']);
-            $stmt->bindParam(':periode', $data['periode']);
             $stmt->execute();
+
+
+
+
         }
         header('Location: data-alternatif.php');
     }
@@ -80,8 +97,8 @@ if (!empty($_POST)) {
                     <label for="periode">Periode</label>
                     <select class="form-control" name="periode">
                         <option>---</option>
-                        <?php for ($i=2023; $i<=2040; $i++): ?>
-                          <option value="<?=$i?>"><?=$i?></option>
+                        <?php for ($i = 2023; $i <= 2040; $i++) : ?>
+                            <option value="<?= $i ?>"><?= $i ?></option>
                         <?php endfor; ?>
                     </select>
                 </div>

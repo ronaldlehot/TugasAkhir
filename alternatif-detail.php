@@ -1,50 +1,48 @@
 <?php
 
+
+
 include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
-
-
-
-
 ?>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <ol class="breadcrumb" style="background: transparent; padding:0px;">
-                <li><a href="home.php" style="color: #333;">Beranda</a></li>
-                <li class="text-success" style="font-weight: bold;">Detail Alternatif</li>
-            </ol>
-        </div>
-        <div class="col-md-6 text-left">
-            <h5>Detail </h5>
-        
-          
-            <table width="100%" class="table table-striped table-bordered" id="tabeldata">
-                <tr class="text-center">
-                    <th>No</th>
-                    <th>Kriteria</th>
-                    <th>Nilai</th>
-                </tr>
-              
-                <?php
-                $no = 1;
-                foreach (data_kriteria() as $x) {
-                    echo "<tr><td class=\"text-center\">$no</td><td>{$x[1]}</td><td>" . nilai_alternatif($_GET['id'], $x[0]) . "</td></tr>";
-                    $no++;
-                }
-                ?>
-              
-                <button type="button" onclick="location.href='alternatif.php'" class="btn btn-success">Kembali</button>
+        <!-- Bagian HTML Anda -->
+        <!-- ... -->
+        <table width="100%" class="table table-striped table-bordered" id="tabeldata">
+            <tr class="text-center">
+           
+           <?php $qNama = $koneksi->prepare("SELECT * FROM alternatif WHERE id = :id");
+            $qNama->bindParam(':id', $_GET['id']);
+            $qNama->execute();
+            $dataNama = $qNama->fetch();
+            echo "<tr><td colspan=\"4\" class=\"text-center\">{$dataNama['nama']}</td></tr>";
+            ?>
+                <th>No</th>
+                <th>Kriteria</th>
+                <th>Nilai</th>
+                <th>Periode</th>
+            </tr>
 
-            </table>
-        
-        
+            <?php
+            $no = 1;
+            foreach (data_kriteria() as $x) {
+                $periode = getPeriode($_GET['id']);
+                echo "<tr><td class=\"text-center\">$no</td><td>{$x[1]}</td><td>" . nilai_alternatif($_GET['id'], $x[0]) . "</td><td>$periode</td></tr>";
+                $no++;
+            }
+            ?>
 
-        </div>
+            <tr>
+                <td colspan="4" class="text-center">
+                    <button type="button" onclick="location.href='alternatif.php'" class="btn btn-success">Kembali</button>
+                </td>
+            </tr>
+        </table>
+        <!-- ... -->
     </div>
 </div>
-
 
 <?php include_once 'footer.php'; ?>

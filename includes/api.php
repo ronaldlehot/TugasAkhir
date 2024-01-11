@@ -155,3 +155,17 @@ function data_alternatif() {
     else return array();
 }
 
+
+
+
+// Fungsi untuk mengambil periode sesuai dengan id alternatif yang ada di tabel nilai_alternatif
+function getPeriode($id) {
+    global $koneksi;
+    $sql = "SELECT periode FROM histori WHERE alternatif = :id";
+    $stmt = $koneksi->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['periode'];
+
+}

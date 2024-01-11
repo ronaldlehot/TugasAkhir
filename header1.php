@@ -75,7 +75,7 @@ include_once './includes/api.php';
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="home.php"><img src="images/logo-unimal.png" alt="" width="32" height="40 mb-3">SPK AHP dan SAW</a>
+                <a class="navbar-brand" href="home.php"><img src="images/puskesmas.png" alt="" width="32" height="40 mb-3">SPK AHP dan SAW</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -92,7 +92,13 @@ include_once './includes/api.php';
                     <li><a href="perbandingan-kriteria.php">Perbandingan Kriteria</a></li>
                 
                     <li><a href="alternatif.php">Alternatif</a></li>
-                    <li><a href="data-alternatif.php">Analisa Alternatif</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></span>Analisa Alternatif <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                           
+                            <li><a href="data-alternatif.php">Analisa Alternatif</a></li>
+                            <li><a href="histori.php">Histori Alternatif</a></li>
+                        </ul>
                 <?php endif; ?>
                             
 

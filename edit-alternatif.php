@@ -51,8 +51,19 @@ if (isset($_POST['update'])) {
         $q->bindParam(':nilai', $kriteria[$key]);
         $q->execute();
     }
+
+    // Update data periode di tabel histori
+    $periode = $_POST['periode'];
+    $sql = "UPDATE histori SET periode = :periode WHERE alternatif = :id";
+    $stmt = $koneksi->prepare($sql);
+    $stmt->bindParam(':periode', $periode);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    
     header('Location: ./alternatif.php');
 }
+
+
 
 ?>
 
@@ -87,18 +98,32 @@ if (isset($_POST['update'])) {
                     <label for=\"kriteria$key\">$nama ($atribut)</label>
                     <input type=\"hidden\" name=\"id_kriteria[]\" value=\"$key\">
                     <select class=\"form-control\" id=\"kriteria$key\" name=\"kriteria[]\">";
+
                     for ($i = 1; $i <= 5; $i++) {
                         if ($value == $i) $s = ' selected';
                         else $s = '';
                         echo "<option$s value=\"$i\">$i</option>";
                     }
                     echo "</select>
+                    
                 </div>";
-                }
+                    }
+                    ?> 
+                    <?php echo "<div class=\"form-group\">
+                    <label for=\"periode\">Periode</label>
+                    <select class=\"form-control\" name=\"periode\">";
+                       
+                    for ($i = 2023; $i <= 2040; $i++) {
+                        echo "<option value=\"$i\">$i</option>";
+                    }
+                    
+                    echo "</select>
+                </div>";
                 ?>
+                
 
 
-                <button type="submit" name="update" class="btn btn-primary">Update</button>
+                <button type="submit" name="update" class="btn btn-danger">Update</button>
                 <button type="button" onclick="location.href='alternatif.php'" class="btn btn-danger">Cancel</button>
             </form>
         </div>

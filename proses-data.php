@@ -48,12 +48,17 @@ include 'header1.php';
     }
     ?>
 </table><hr>
+
+
+
 <?php
 $hasil = array();
 foreach (array_keys($data_hasil) as $x) {
     $hasil[$x]=array_sum($data_hasil[$x]);
 }
 arsort($hasil);
+
+
 ?>
 <h6>Hasil</h6>
 <div id="tempat-hasil">
@@ -75,19 +80,22 @@ arsort($hasil);
             <th>Rangking</th><th>Alternatif</th><th>Nilai</th> <th>Kesesuaian Pengguna</th>
         </tr>
         <?php
-        $no = 1;
-        foreach (array_keys($hasil) as $x) {
-            $q = $koneksi->prepare("SELECT * FROM alternatif WHERE id='$x'");
-            $q->execute();
-            @$data = $q->fetchAll()[0];
-            @$nama = $data[1];
-            @$id =  $data[0];
-            echo "<tr id=\"baris-$id\"><td>$no</td><td>$nama</td><td>{$hasil[$x]}</td><td><div class=\"custom-control custom-checkbox text-center\">
-            <input type=\"checkbox\" class=\"custom-control-input sesuai\" id=\"sesuai-$id\" checked>
-            <label class=\"custom-control-label\" id=\"label-$id\" for=\"sesuai-$id\">Sesuai</label>
-            </div></td></tr>";
-            $no++;
-        }
+            $no = 1;
+            foreach (array_keys($hasil) as $x) {
+                $q = $koneksi->prepare("SELECT * FROM alternatif WHERE id='$x'");
+                $q->execute();
+                @$data = $q->fetchAll()[0];
+                @$nama = $data[1];
+                @$id =  $data[0];
+                echo "<tr id=\"baris-$id\"><td>$no</td><td>$nama</td><td>{$hasil[$x]}</td><td><div class=\"custom-control custom-checkbox text-center\">
+                <input type=\"checkbox\" class=\"custom-control-input sesuai\" id=\"sesuai-$id\" checked>
+                <label class=\"custom-control-label\" id=\"label-$id\" for=\"sesuai-$id\">Sesuai</label>
+                </div></td></tr>";
+                $no++;
+                
+             
+
+            }
         ?>
     </table>
     <?php } ?>

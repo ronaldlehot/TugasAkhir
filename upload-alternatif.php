@@ -42,7 +42,7 @@ require_once "./PHPExcel-1.8/Classes/PHPExcel.php";
                     $q->execute();
                     $q = $koneksi->prepare("DELETE FROM alternatif");
                     $q->execute();
-                
+                    
                     for ($baris = $baris_mulai_data; $baris <= $baris_terakhir; $baris++) {
                         $q = $koneksi->prepare("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA='$NAMA_DATABASE' AND TABLE_NAME='alternatif'");
                         $q->execute();
@@ -56,9 +56,16 @@ require_once "./PHPExcel-1.8/Classes/PHPExcel.php";
                             $_nilai = $worksheet->getCell($kriteria[$x[0]] . $baris)->getValue();
                             $_nilai = str_replace(',', '.', $_nilai);
                             $periode = date('Y'); // Ambil tahun saat ini sebagai nilai periode
-                            $q = $koneksi->prepare("INSERT INTO nilai_alternatif VALUE ('$_next_id', '{$x[0]}', '$_nilai', '$periode')");
+                            $q = $koneksi->prepare("INSERT INTO nilai_alternatif VALUE ('$_next_id', '{$x[0]}', '$_nilai')");
                             $q->execute();
+    
+                                                    // Insert data periode ke dalam tabel histori
+                            $q = $koneksi->prepare("INSERT INTO histori (alternatif, periode) VALUES ('$_next_id', '$periode')");
+                            $q->execute();
+
+                           
                         }
+
                         
                         $q = $koneksi->prepare("DELETE FROM tanggapan WHERE 1"); //hapus tanggapan
                         $q->execute();
