@@ -1,14 +1,17 @@
-<?php include './includes/api.php';
-include './includes/session.php';
-include 'header1.php';
+<?php include_once'./includes/api.php';
+include_once'./includes/session.php';
+include_once'header1.php';
 ?>
+
 <h5><span class="fas fa-radiation"></span> Proses Data</h5><hr>
 <h6>Data</h6>
 <table class="table table-bordered table-sm table-striped small">
     <tr class="text-center">
         <th>Alternatif</th>
         <?php
-        foreach (data_kriteria() as $x) echo "<th>{$x[1]} ({$x[5]})</th>";
+        foreach (data_kriteria() as $x) {
+            echo "<th>{$x[1]} ({$x[5]})</th>";
+        }
         ?>
     </tr>
     <?php
@@ -29,7 +32,9 @@ include 'header1.php';
     <tr class="text-center">
         <th>Alternatif</th>
         <?php
-        foreach (data_kriteria() as $x) echo "<th>{$x[1]} ({$x[3]})</th>";
+        foreach (data_kriteria() as $x) {
+            echo "<th>{$x[1]} ({$x[3]})</th>";
+        }
         ?>
     </tr>
     <?php
@@ -38,25 +43,30 @@ include 'header1.php';
     foreach (data_alternatif() as $x) {
         echo "<tr><td>{$x[1]}</td>";
         foreach (data_kriteria() as $y) {
-            if ($y[2]==1) $n = nilai_alternatif($x[0], $y[0])/max($data[$y[0]]);
-            else $n = min($data[$y[0]])/nilai_alternatif($x[0], $y[0]);
+            if ($y[2] == 1) $n = nilai_alternatif($x[0], $y[0]) / max($data[$y[0]]);
+            else $n = min($data[$y[0]]) / nilai_alternatif($x[0], $y[0]);
             echo "<td>$n</td>";
             $data_normalisasi[$y[0]][$x[0]] = $n;
-            $data_hasil[$x[0]][$y[0]] = $n*$y[3];
+            $data_hasil[$x[0]][$y[0]] = $n * $y[3];
         }
         echo '</tr>';
     }
     ?>
 </table><hr>
 
-
-
 <?php
 $hasil = array();
 foreach (array_keys($data_hasil) as $x) {
-    $hasil[$x]=array_sum($data_hasil[$x]);
+    $hasil[$x] = array_sum($data_hasil[$x]);
 }
 arsort($hasil);
+
+  
+  
+
+
+
+?>
 
 
 ?>
@@ -92,10 +102,15 @@ arsort($hasil);
                 <label class=\"custom-control-label\" id=\"label-$id\" for=\"sesuai-$id\">Sesuai</label>
                 </div></td></tr>";
                 $no++;
-                
-             
+                $hasil_akhir = $hasil[$x];
+                $sql = "UPDATE histori SET hasil_akhir = :hasil_akhir WHERE alternatif = :id_alternatif";
+                $stmt = $koneksi->prepare($sql);
+                $stmt->bindParam(':hasil_akhir', $hasil_akhir);
+                $stmt->bindParam(':id_alternatif',$x );
+                $stmt->execute();
 
             }
+
         ?>
     </table>
     <?php } ?>
@@ -153,4 +168,4 @@ $('.sesuai').click(function(e) {
 });
 </script>
 
-<?php include 'footer.php'; ?>
+<?php include_once 'footer.php'; ?>
