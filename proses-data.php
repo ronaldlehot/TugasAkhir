@@ -69,7 +69,7 @@ arsort($hasil);
 ?>
 
 
-?>
+
 <h6>Hasil</h6>
 <div id="tempat-hasil">
     <?php

@@ -81,7 +81,7 @@ include_once './includes/api.php';
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                 <li><a href="home.php">Home</a></li>
+                 <li><a href="home.php">Beranda</a></li>
                  <?php if (akses_pengguna(array(0))): ?>
                  <li><a href="list-alternatif.php">Data Alternatif</a></li>
                  <li><a href="manajemen-pengguna.php">Manajemen Pengguna</a></li>
@@ -97,7 +97,7 @@ include_once './includes/api.php';
                         <ul class="dropdown-menu">
                            
                             <li><a href="data-alternatif.php">Analisa Alternatif</a></li>
-                            <li><a href="histori.php">Histori Alternatif</a></li>
+                            <li><a href="laporan-alternatif.php">Laporan Alternatif</a></li>
                         </ul>
                 <?php endif; ?>
                             

@@ -19,7 +19,7 @@ include_once './includes/session.php';
 <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb" style="background: transparent; padding:0px;">
-            <li><a href="main.php" style="color: #333;">Home</a></li>
+            <li><a href="home.php" style="color: #333;">Beranda</a></li>
             <li class="text-success" style="font-weight: bold;">Data Alternatif</li>
         </ol>
     </div>

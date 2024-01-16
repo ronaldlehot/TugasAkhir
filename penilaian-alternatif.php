@@ -94,7 +94,7 @@ if (!empty($_POST)) {
                 <?php endforeach; ?>
 
                 <div class="form-group">
-                    <label for="periode">Periode</label>
+                    <label >Periode</label>
                     <select class="form-control" name="periode">
                         <option>---</option>
                         <?php for ($i = 2023; $i <= 2040; $i++) : ?>

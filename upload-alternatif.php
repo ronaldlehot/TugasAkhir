@@ -93,6 +93,8 @@ if (!empty($_FILES)) {
         <?php $k++;
         } ?>
         <button class="btn btn-danger" id="upload" type="submit"><span class="fas fa-upload"></span> Upload</button>
+       
+        <button onclick="location.href='alternatif.php'" class="btn btn-danger">Kembali</button>
     </form>
 <?php }
 include 'footer.php'; ?>

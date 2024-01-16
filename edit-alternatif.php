@@ -4,6 +4,8 @@
 include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
+
+$alertMessage = ""; // Variabel untuk menyimpan pesan alert
 // ambil id alternatif dari parameter
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];
@@ -59,8 +61,11 @@ if (isset($_POST['update'])) {
     $stmt->bindParam(':periode', $periode);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
+
+     // Set pesan alert
+     $alertMessage = "Update berhasil!";
     
-    header('Location: ./alternatif.php');
+   
 }
 
 
@@ -132,6 +137,17 @@ if (isset($_POST['update'])) {
 
 
 </div>
+
+<script>
+// Tampilkan alert jika $alertMessage tidak kosong
+if ("<?php echo $alertMessage; ?>" !== "") {
+    alert("<?php echo $alertMessage; ?>");
+    // Redirect ke halaman alternatif.php setelah menampilkan alert
+    window.location.href = './alternatif.php';
+}
+</script>
+
+
 <?php
 
 
