@@ -24,7 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
         $stmt->execute();
         $data[$key]['alternatif'] = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-  
+
+    // Urutkan data berdasarkan hasil akhir dari yang terbesar ke terkecil
+    usort($data, function ($a, $b) {
+        if ($a['hasil_akhir'] == $b['hasil_akhir']) {
+            return 0;
+        }
+        return ($a['hasil_akhir'] > $b['hasil_akhir']) ? -1 : 1;
+    });
+    
+
+    // Berikan peringkat berdasarkan urutan hasil akhir
+    $peringkat = 1;
+    foreach ($data as $key => $value) {
+        $data[$key]['peringkat'] = $peringkat;
+        $peringkat++;
+    }
 }
 
 ?>
@@ -42,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
 
             <form action="" method="post">
                 <div class="form-group">
-                    <label >Periode:</label>
+                    <label>Periode:</label>
                     <select class="form-control" name="periode">
                         <option></option>
                         <?php for ($i = 2023; $i <= 2040; $i++) : ?>
@@ -50,47 +65,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
                         <?php endfor; ?>
                     </select>
                     <br>
-                    <button type="submit" class="btn btn-danger">Cari</button>
+                    <button type="submit" class="btn btn-danger" name="cari">Cari</button>
                 </div>
             </form>
 
-            <!-- Tampilkan tabel berdasarkan periode yang di-input user yakni atribut alternatif, periode, dan hasil_akhir -->
-            <table width="100%" class="table table-striped table-bordered" id="tabeldata">
-                <thead>
-                    <tr>
-                        <th width="30px">No</th>
-                        <th>Alternatif</th>
-                        <th>Periode</th>
-                        <th>Hasil Akhir</th>
-                    </tr>
-                </thead>
+            <?php if (isset($_POST['cari'])) : ?>
+                <!-- Tombol Cetak PDF -->
+            <button type="button" class="btn btn-success" onclick="cetakPDF()">Cetak PDF</button>
+            <!-- Tombol Cetak Word -->
+            <button type="button" class="btn btn-success" onclick="cetakWord()">Cetak Word</button>
+            <br><br>
 
-                <tfoot>
-                    <tr>
-                        <th>No</th>
-                        <th>Alternatif</th>
-                        <th>Periode</th>
-                        <th>Hasil Akhir</th>
-                    </tr>
-                </tfoot>
-
-                <tbody>
-                    <?php
-                    $no = 1;
-                    foreach ($data as $row) {
-                    ?>
+                <!-- Tampilkan tabel berdasarkan periode yang di-input user yakni atribut alternatif, periode, dan hasil_akhir -->
+                <table width="100%" class="table table-striped table-bordered" id="tabeldata">
+                    <thead>
                         <tr>
-                            <td class="text-center"><?= $no ?></td>
-                            <td><?= $row['alternatif']['nama'] ?></td>
-                            <td><?= $row['periode'] ?></td>
-                            <td><?= $row['hasil_akhir'] ?></td>
+                            <th width="30px">Peringkat</th>
+                            <th>Alternatif</th>
+                            <th>Periode</th>
+                            <th>Hasil Akhir</th>
                         </tr>
-                    <?php
-                        $no++;
-                    }
-                    ?>
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tfoot>
+                        <tr>
+                            <th>Peringkat</th>
+                            <th>Alternatif</th>
+                            <th>Periode</th>
+                            <th>Hasil Akhir</th>
+                        </tr>
+                    </tfoot>
+
+                    <tbody>
+                        <?php foreach ($data as $row) : ?>
+                            <tr>
+                                <td class="text-center"><?= $row['peringkat'] ?></td>
+                                <td><?= $row['alternatif']['nama'] ?></td>
+                                <td><?= $row['periode'] ?></td>
+                                <td><?= $row['hasil_akhir'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
 
         </div>
     </div>

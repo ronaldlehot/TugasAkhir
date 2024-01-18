@@ -159,3 +159,12 @@ function data_alternatif() {
 
 
 
+//fungsi untuk menampilkan periode sesuai dengan id alternatif
+function getPeriode($id) {
+    global $koneksi;
+    $q = $koneksi->prepare("SELECT * FROM histori WHERE alternatif = :id");
+    $q->bindParam(':id', $id);
+    $q->execute();
+    $data = $q->fetch();
+    return $data['periode'];
+}
