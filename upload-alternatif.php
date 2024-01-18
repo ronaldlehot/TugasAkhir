@@ -69,6 +69,8 @@ if (!empty($_FILES)) {
             <input class="custom-file-input" name="file" id="file" required type="file" accept=".xls,.xlsx">
             <label class="custom-file-label" for="file">File Excel</label>
         </div>
+       
+        <a href="./upload/contoh-data-alternatif.xlsx" class="btn btn-success mb-2 mr-sm-2"><span class="fas fa-download"></span> Download Contoh File Excel</a>
         <div class="form-group row">
             <label for="nama" class="col-sm-3 col-form-label">Kolom Nama Alternatif:</label>
             <div class="col-sm-3">
