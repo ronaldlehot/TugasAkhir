@@ -116,7 +116,7 @@ arsort($hasil);
     <?php } ?>
 </div>
 <h6>Akurasi tanggapan anda: <span id="akurasi-di-sini"><?=$akurasi_di_sini?> %</span></h6><hr>
-<h6>Total akurasi keseluruhan: <span id="akurasi"><span class="bg-warning">menunggu jaringan . .</span></span></h6><hr>
+<!-- <h6>Total akurasi keseluruhan: <span id="akurasi"><span class="bg-warning">menunggu jaringan . .</span></span></h6><hr> -->
 <script>
 var __total = <?=@count($hasil)?>;
 function fetch() {

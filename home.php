@@ -38,6 +38,11 @@ include_once './includes/session.php';
             <div class="panel-body">
                 <ol class="list-unstyled">
                   
+                    <?php
+                    foreach (data_kriteria() as $x) {
+                        echo "<li>{$x[1]} ({$x[5]})</li>";
+                    }
+                    ?>
                 </ol>
             </div>
         </div>
@@ -50,7 +55,12 @@ include_once './includes/session.php';
         <div class="panel panel-default">
             <div class="panel-body">
                 <ol class="list-unstyled">
-                    
+                   
+                    <?php
+                    foreach (data_alternatif() as $x) {
+                        echo "<li>{$x[1]}</li>";
+                    }   
+                    ?>
                 </ol>
             </div>
         </div>
@@ -79,13 +89,25 @@ include_once './includes/session.php';
             },
             series: [
             
-                
+                //ambii data  alternatif  berdasarkan hasil akhir dari taeble histori
+                <?php
+                $q = $koneksi->prepare("SELECT * FROM alternatif");
+                $q->execute();
+                $data = $q->fetchAll();
+                foreach ($data as $x) {
+                    $id = $x[0];
+                    $nama = $x[1];
+                    $q = $koneksi->prepare("SELECT * FROM histori WHERE alternatif='$id'");
+                    $q->execute();
+                    $data = $q->fetchAll();
+                    $hasil_akhir = $data[0][3];
+                    echo "{name: '$nama',data: [$hasil_akhir]},";
+                }
+                ?>
                
                 
+               
             
-
-
-           
             
                
             ]
