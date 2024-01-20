@@ -1,10 +1,6 @@
 <?php
-
-include_once './includes/api.php';
-include_once 'header1.php';
-include_once './includes/session.php';
-
-
+include './includes/api.php';
+include './includes/session.php';
 if (!empty($_POST)) {
     $pesan_error = array();
     $id = $_POST['id'];
@@ -29,70 +25,39 @@ if (!empty($_POST)) {
     } else header('Location: ./data-kriteria.php');
 } else header('Location: ./data-kriteria.php');
 
+include 'header1.php';
 ?>
-
-
-
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-8">
+     <div class="col-xs-12 col-sm-12 col-md-8">       
         <div class="page-header">
             <h5>Ubah Kriteria</h5>
         </div>
-
-        <form method="post">
-            
-            <!-- <div class="form-group">
-                <label for="kt">ID Kriteria</label>
-                <input type="text" class="form-control" id="id" name="id" value="<?=$id?>"  >
-            </div> -->
-            <div class="form-group">
-                <label for="kt">Nama Kriteria</label>
-                <input type="text" class="form-control" id="nama" name="nama" value="<?=$nama?>">
-            </div>
-            <div class="form-group">
-                <label for="atribut">Atribut Kriteria</label>
-                <select id="atribut" name="atribut" class="form-control mb-2 mr-sm-2">
-                    <?php
-                    foreach (data_atribut() as $x) {
-                        if ($x['id']==$atribut) $s = ' selected';
-                        else $s = '';
-                        echo "<option$s value=\"{$x['id']}\">{$x['nama']}</option>";
-                    }
-                    ?>
-                    </select>
-            </div>
-         
-            <button type="submit" class="btn btn-success" onclick="editData()">Ubah</button>
-            <button type="button" onclick="location.href='data-kriteria.php'" class="btn btn-success">Kembali</button>
+        <form method="post"  >
+            <input type="hidden" name="id" value="<?=$id?>">
+            <label class="form-group" for="nama">Nama Kriteria</label>
+            <input id="nama" name="nama" class="form-control mb-2 mr-sm-2" type="text" value="<?=$nama?>">
+            <label class="form-group" for="atribut">Atribut</label>
+            <select id="atribut" name="atribut" class="form-control mb-2 mr-sm-2">
+            <?php
+            foreach (data_atribut() as $x) {
+                if ($x['id']==$atribut) $s = ' selected';
+                else $s = '';
+                echo "<option$s value=\"{$x['id']}\">{$x['nama']}</option>";
+            }
+            ?>
+            </select>
+            <br>
+            <button class="btn btn-success" type="submit"><span class="fas fa-save"></span> Simpan</button>
+            <button class="btn btn-success" type="reset" onclick="location.href='./data-kriteria'"><span class="fas fa-times"></span> Batal</button>
             <?php if (!empty($pesan_error)) {
-                    echo '<hr><div class="alert alert-dismissable alert-danger"><ul>';
-                    foreach ($pesan_error as $x) {
-                        echo '<li>'.$x.'</li>';
-                    }
-                    echo '</ul></div>';
+                echo '<hr><div class="alert alert-dismissable alert-danger"><ul>';
+                foreach ($pesan_error as $x) {
+                    echo '<li>'.$x.'</li>';
                 }
-                ?>
-        
+                echo '</ul></div>';
+            }
+            ?>
         </form>
-
-    </div>
-   
+     </div>
 </div>
-
-<script>
-    // Menampilkan alert ketika tombol "Simpan" ditekan
-    function editData() {
-        if  (document.getElementById("nama").value == "") {
-            alert("Nama kriteria tidak boleh kosong");
-            return false;
-        }
-        else {
-            alert("Data berhasil diubah");
-            return true;
-        }
-    }
-</script>
-
-<?php
-include_once 'footer.php';
-?>
+<?php include 'footer.php';?>
