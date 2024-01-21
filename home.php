@@ -9,6 +9,27 @@ include_once './includes/session.php';
 
 
 ?>
+<style>
+#btnBackToTop {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#btnBackToTop:hover {
+    background-color: #0056b3;
+}
+</style>
 
 <div class="container">
     <div class="row">
@@ -113,6 +134,29 @@ include_once './includes/session.php';
             ]
         });
     });
+</script>
+
+<!-- Tombol Kembali ke Atas -->
+<button onclick="topFunction()" id="btnBackToTop" title="Kembali ke Atas">&#8679;</button>
+
+<script>
+window.onscroll = function() {
+    scrollFunction();
+};
+
+function scrollFunction() {
+    var btnBackToTop = document.getElementById("btnBackToTop");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        btnBackToTop.style.display = "block";
+    } else {
+        btnBackToTop.style.display = "none";
+    }
+}
+
+function topFunction() {
+    document.body.scrollTop = 0; // Untuk Safari
+    document.documentElement.scrollTop = 0; // Untuk Chrome, Firefox, IE, dan Opera
+}
 </script>
 
 <?php include_once 'footer.php'; ?>

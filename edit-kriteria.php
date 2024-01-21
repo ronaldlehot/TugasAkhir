@@ -48,7 +48,7 @@ include 'header1.php';
             </select>
             <br>
             <button class="btn btn-success" type="submit"><span class="fas fa-save"></span> Simpan</button>
-            <button class="btn btn-success" type="reset" onclick="location.href='./data-kriteria'"><span class="fas fa-times"></span> Batal</button>
+            <button class="btn btn-success" type="reset" onclick="location.href='./data-kriteria.php'"><span class="fas fa-times"></span> Batal</button>
             <?php if (!empty($pesan_error)) {
                 echo '<hr><div class="alert alert-dismissable alert-danger"><ul>';
                 foreach ($pesan_error as $x) {
