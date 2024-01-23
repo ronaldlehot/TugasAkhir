@@ -1,10 +1,36 @@
-<?php
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<?php
 include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
 
-
+if (isset($_SESSION['pesan'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan']);
+} elseif (isset($_SESSION['pesan_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal']);
+}
 
 ?>
 
@@ -28,6 +54,13 @@ include_once './includes/session.php';
 #btnBackToTop:hover {
     background-color: #0056b3;
 }
+
+table {
+        font-size: 14px; /* Sesuaikan ukuran huruf sesuai kebutuhan */
+    }
+
+
+    
 </style>
 
 <div class="row">
@@ -76,9 +109,9 @@ include_once './includes/session.php';
         <td>{$x[1]}</td>
         <td class=\"text-center\">{$x[5]}</td>
         <td class=\"text-center\">{$x[3]}</td>
-        <td class=\"text-center\">
+        <td class=\"text-center table-actions\">
         <a href=\"edit-kriteria.php?id={$x[0]}\" class=\"btn btn-warning \"><span class=\"glyphicon glyphicon-pencil\"> </span></a>
-        <a href=\"hapus-kriteria.php?id={$x[0]}\" class=\"btn btn-danger \" onclick=\"return confirm('Apakah kamu yakin ingin menghapus data ini?');\"><span class=\"glyphicon glyphicon-trash\"></span></a>
+        <a href=\"hapus-kriteria.php?id={$x[0]}\" class=\"btn btn-danger \" onclick=\"confirmAndAlert()\"><span class=\"glyphicon glyphicon-trash\"></span></a>
         </td>";
         echo '</tr>';
         $no++;
@@ -108,6 +141,27 @@ function topFunction() {
     document.body.scrollTop = 0; // Untuk Safari
     document.documentElement.scrollTop = 0; // Untuk Chrome, Firefox, IE, dan Opera
 }
+
+
+function confirmAndAlert() {
+        if (confirm('Apakah kamu yakin ingin menghapus data ini?')) {
+            showAlert();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function showAlert() {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Data Berhasil Dihapus',
+            showConfirmButton: false,
+            timer: 15000  // Ubah timer sesuai kebutuhan Anda
+        });
+    }
+
 </script>
 
  <?php include_once 'footer.php'; ?>

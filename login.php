@@ -16,14 +16,12 @@ if(isset($_POST['username'])){
             $q = $koneksi->prepare("INSERT INTO masuk VALUE ('$uuid', '$username')");
             $q->execute();
             setcookie('masuk', $uuid, time()+3600*24*30*12);
+            $_SESSION['login_success'] = true;
             header('Location: home.php');
-        } echo "<script>alert('password anda salah, silahkan login ulang !')</script>";
+        } else echo "<script>alert('password anda salah, silahkan login ulang !')</script>";
     } else echo "<script>alert('username anda salah, silahkan login ulang !')</script>";
 }
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

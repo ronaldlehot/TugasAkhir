@@ -1,8 +1,25 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <?php
 
 include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
+
+
+if(isset($_SESSION['login_success'])){
+    echo "<script>
+    swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Login Berhasil',
+            showConfirmButton: false,
+            timer: 1500
+    });
+    </script>";
+    unset($_SESSION['login_success']);
+}
 
 
 

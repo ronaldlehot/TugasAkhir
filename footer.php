@@ -11,6 +11,7 @@
 <script src="js/main.js"></script>
 <script src="js/highcharts.js"></script>
 <script src="js/exporting.js"></script>
+
 <script>
     $(document).ready(function() {
 
