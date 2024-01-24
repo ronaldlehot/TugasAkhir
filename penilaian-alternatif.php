@@ -4,9 +4,9 @@ include_once 'header1.php';
 include_once './includes/session.php';
 
 
-
 if (!empty($_POST)) {
     global $koneksi;
+  
     // Periksa apakah nilai yang dibutuhkan ada dalam $_POST
     if (isset($_POST['alternatif']) && isset($_POST['kriteria']) && isset($_POST['periode']) ) {
         $alternatif = $_POST['alternatif'];
@@ -53,12 +53,18 @@ if (!empty($_POST)) {
             $stmt->bindParam(':nilai', $data['nilai']);
             $stmt->execute();
 
-
-
-
+          // Jika berhasil
+          if ($stmt->execute()) {
+            $_SESSION['pesan'] = true;
+        } else {
+            // Jika gagal
+            $_SESSION['pesan_gagal'] = true;
+        }
         }
         header('Location: data-alternatif.php');
     }
+
+    
 }
 
 

@@ -31,7 +31,7 @@ if (!empty($_POST)) {
             header("Location: data-kriteria.php");
             exit(); // Penting untuk menghentikan eksekusi script setelah header redirect
         } else {
-            $_SESSION['pesan_gagal'] = true;
+            $_SESSION['pesan_gagal'] = false;
             header("Location: data-kriteria.php");
             exit(); // Penting untuk menghentikan eksekusi script setelah header redirect
         }

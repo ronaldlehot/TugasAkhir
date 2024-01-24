@@ -3,7 +3,7 @@ $NAMA_DATABASE = 'tugas_spk3';
 $USERNAME_DATABASE = 'root';
 $PASSWORD_DATABASE = '';
 $koneksi = new PDO("mysql:host=localhost;dbname=$NAMA_DATABASE", $USERNAME_DATABASE, $PASSWORD_DATABASE);
-if (isset($_COOKIE['tanggapan'])) $TANGGAPAN = $_COOKIE['tanggapan'];
+if (isset($_SESSION['tanggapan'])) $TANGGAPAN = $_SESSION['tanggapan'];
 else {
     $q = $koneksi->prepare('SELECT UUID()');
     $q->execute();

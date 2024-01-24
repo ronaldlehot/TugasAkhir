@@ -1,36 +1,8 @@
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <?php
 include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
-
-if (isset($_SESSION['pesan'])) {
-    echo "
-        <script>
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Data Berhasil Ditambahkan',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>";
-    unset($_SESSION['pesan']);
-} elseif (isset($_SESSION['pesan_gagal'])) {
-    echo "
-        <script>
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Data Gagal Ditambahkan',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>";
-    unset($_SESSION['pesan_gagal']);
-}
 
 ?>
 
@@ -55,9 +27,6 @@ if (isset($_SESSION['pesan'])) {
     background-color: #0056b3;
 }
 
-table {
-        font-size: 14px; /* Sesuaikan ukuran huruf sesuai kebutuhan */
-    }
 
 
     
@@ -164,7 +133,36 @@ function confirmAndAlert() {
 
 </script>
 
- <?php include_once 'footer.php'; ?>
+ <?php include_once 'footer.php'; 
+ 
+ 
+if (isset($_SESSION['pesan'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan']);
+} elseif (isset($_SESSION['pesan_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal']);
+}
+
+ ?>
 
 
  

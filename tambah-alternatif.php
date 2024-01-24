@@ -22,11 +22,16 @@ if (!empty($_POST)) {
 
     if (empty($pesan_error)) {
         $q = $koneksi->prepare("INSERT INTO alternatif VALUE (NULL, '$nama')");
+        $q->bindParam(':nama', $nama);
+
         if ($q->execute()) {
-            $pesan = "Data berhasil ditambahkan!";
+            $_SESSION['pesan']= true;
             header('Location: list-alternatif.php');
+            exit(); // Penting untuk menghentikan eksekusi script setelah header redirect
         } else {
-            $pesan_error[] = "Gagal menambahkan data. Silakan coba lagi.";
+            $_SESSION['pesan_gagal'] = false;
+            header('Location: list-alternatif.php');
+            exit(); // Penting untuk menghentikan eksekusi script setelah header redirect
         }
     }
 }

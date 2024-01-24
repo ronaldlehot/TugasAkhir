@@ -1,9 +1,12 @@
-<?php
 
+
+<?php
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 ?>
+
 <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb" style="background: transparent; padding:0px;">
@@ -56,7 +59,34 @@ include_once './includes/session.php';
 
 
 <?php
+
 include_once 'footer.php';
+if (isset($_SESSION['pesan'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan']);
+} elseif (isset($_SESSION['pesan_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal']);
+}
+
 ?>
 
 

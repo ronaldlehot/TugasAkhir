@@ -72,7 +72,7 @@ include_once './includes/session.php';
                 <!-- <td><?php echo $row['hasil_akhir'] ?></td> -->
                 <td class="text-center">
                     <a href="edit-listalternatif.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a href="hapus-listalternatif.php?id=<?php echo $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    <a href="hapus-listalternatif.php?id=<?php echo $row['id'] ?>" onclick="confirmAndAlert()" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                 </td>
             </tr>
         <?php
@@ -104,9 +104,61 @@ function topFunction() {
     document.body.scrollTop = 0; // Untuk Safari
     document.documentElement.scrollTop = 0; // Untuk Chrome, Firefox, IE, dan Opera
 }
+
+function confirmAndAlert() {
+    if (confirm('Apakah kamu yakin ingin menghapus data ini?')) {
+        showAlert();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function showAlert() {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Data Berhasil Dihapus',
+        showConfirmButton: false,
+        timer: 1500
+    });
+}
+
 </script>
+
+
+
+
 <?php
 include_once 'footer.php';
+
+
+if (isset($_SESSION['pesan'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan']);
+} elseif (isset($_SESSION['pesan_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal']);
+}
+
 ?>
 
 

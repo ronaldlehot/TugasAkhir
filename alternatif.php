@@ -1,8 +1,10 @@
+
 <?php
 
 include_once './includes/api.php';
 include_once 'header1.php';
 include_once './includes/session.php';
+
 
 ?>
 
@@ -32,6 +34,11 @@ include_once './includes/session.php';
 #btnBackToTop:hover {
     background-color: #0056b3;
 }
+
+
+
+
+    
 </style>
 
 
@@ -83,8 +90,8 @@ include_once './includes/session.php';
                 <td><?php echo $row['nama'] ?></td>
                 <!-- <td><?php echo $row['hasil_akhir'] ?></td> -->
                 <td class="text-center">
-                    <a href="alternatif-detail.php?id=<?php echo $row['id'] ?>" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                    <a href="edit-alternatif.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    <a href="alternatif-detail.php?id=<?php echo $row['id'] ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    <a href="edit-alternatif.php?id=<?php echo $row['id'] ?>" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <!-- <a href="alternatif-hapus.php?id=<?php echo $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus data')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> -->
                 </td>
             </tr>

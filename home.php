@@ -1,6 +1,4 @@
-<head>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+
 <?php
 
 include_once './includes/api.php';

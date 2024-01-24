@@ -1,7 +1,5 @@
 <?php
 include_once './includes/api.php';
-
-
 ?>
 
 <!DOCTYPE html>
@@ -22,44 +20,44 @@ include_once './includes/api.php';
     <!-- My Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-   
+
     <style>
-    body {
-        font-family: Poppins;
-    }
+        body {
+            font-family: Poppins;
+        }
 
-    nav {
-        background-color: #0A9343;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
+        nav {
+            background-color: #0A9343;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
 
-    nav .navbar-brand {
-        font-weight: bold;
-        font-size: 18px !important;
-    }
+        nav .navbar-brand {
+            font-weight: bold;
+            font-size: 18px !important;
+        }
 
-    a {
-        color: #fff;
-        display: flex;
-        gap: 10px;
-    }
+        a {
+            color: #fff;
+            display: flex;
+            gap: 10px;
+        }
 
-    a img {
-        margin-top: -10px;
-    }
+        a img {
+            margin-top: -10px;
+        }
 
-    .panel {
-        background-color: white;
-        border: none !important;
-    }
+        .panel {
+            background-color: white;
+            border: none !important;
+        }
 
-    a:hover {
-        background-color: transparent !important;
-        color: #E3A413 !important;
-        font-weight: bold;
-    }
-</style>
+        a:hover {
+            background-color: transparent !important;
+            color: #E3A413 !important;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 
@@ -81,36 +79,37 @@ include_once './includes/api.php';
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                 <li><a href="home.php">Beranda</a></li>
-                 <?php if (akses_pengguna(array(0))): ?>
-                 <li><a href="list-alternatif.php">Data Alternatif</a></li>
-                 <li><a href="manajemen-pengguna.php">Manajemen Pengguna</a></li>
-                 <?php endif; ?>
+                <ul class="nav navbar-nav">
+                    <li><a href="home.php">Beranda</a></li>
+                    <?php if (akses_pengguna(array(0))) : ?>
+                        <li><a href="list-alternatif.php">Data Alternatif</a></li>
+                        <li><a href="manajemen-pengguna.php">Manajemen Pengguna</a></li>
+                    <?php endif; ?>
 
-                 <?php if (akses_pengguna(array(2))): ?>
-                    <li><a href="data-kriteria.php">Data Kriteria</a></li>
-                    <li><a href="perbandingan-kriteria.php">Perbandingan Kriteria</a></li>
-                
-                    <li><a href="alternatif.php">Alternatif</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></span>Analisa Alternatif <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                           
-                            <li><a href="data-alternatif.php">Analisa Alternatif</a></li>
-                            <li><a href="laporan-alternatif.php">Laporan Alternatif</a></li>
-                        </ul>
-                <?php endif; ?>
-                            
+                    <?php if (akses_pengguna(array(2))) : ?>
+                        <li><a href="data-kriteria.php">Data Kriteria</a></li>
+                        <li><a href="perbandingan-kriteria.php">Perbandingan Kriteria</a></li>
 
-               
+                        <li><a href="alternatif.php">Alternatif</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></span>Analisa Alternatif <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
 
-            </ul>
+                                <li><a href="data-alternatif.php">Analisa Alternatif</a></li>
+                                <li><a href="laporan-alternatif.php">Laporan Alternatif</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+
+
+
+
+                </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                   
+
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></span>(<?=pengguna()['keterangan']?>) <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></span>(<?= pengguna()['keterangan'] ?>) <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="keluar.php">Logout</a></li>
                         </ul>

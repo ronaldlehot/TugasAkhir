@@ -55,7 +55,13 @@ if (!empty($_FILES)) {
            $stmt->bindParam(':id_alternatif', $alternatif);
            $stmt->bindParam(':periode', $periode);
            $stmt->execute();
-
+            // Jika berhasil
+            if ($stmt->execute()) {
+                $_SESSION['pesan'] = true;
+            } 
+            else {
+                $_SESSION['pesan'] = false;
+            }
         $q = $koneksi->prepare("DELETE FROM tanggapan WHERE 1"); //hapus tanggapan
         $q->execute();
     }

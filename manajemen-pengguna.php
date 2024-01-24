@@ -58,7 +58,7 @@ include_once './includes/session.php';
                     <button onclick=\"location.href='./edit-pengguna.php?username={$user[0]}'\" class=\"btn btn-warning\">
                         <span class=\"glyphicon glyphicon-pencil\"></span> 
                     </button>
-                    <button onclick=\"hapusPengguna('{$user[0]}')\" class=\"btn btn-danger\">
+                    <button onclick=\"hapusPengguna('{$user[0]}')\" class=\"btn btn-danger\" >
                         <span class=\"glyphicon glyphicon-trash\"></span> 
                     </button>
                 </td>";
@@ -81,4 +81,32 @@ include_once './includes/session.php';
     }
 </script>
 
-<?php include_once 'footer.php'; ?>
+<?php include_once 'footer.php'; 
+
+if (isset($_SESSION['pesan'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan']);
+} elseif (isset($_SESSION['pesan_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Ditambahkan',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal']);
+}
+
+?>

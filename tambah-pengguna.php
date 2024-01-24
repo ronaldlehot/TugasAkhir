@@ -23,9 +23,23 @@ if (!empty($_POST)) {
     if ($nama=='') array_push($pesan_error, 'Nama tampilan tidak boleh kosong');
 
     if (empty($pesan_error)) {
-        $q = $koneksi->prepare("INSERT INTO pengguna VALUE ('$username', SHA2('$password', 0), '$level', '$nama')");
-        $q->execute();
-        header('Location: ./manajemen-pengguna.php');
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $q_insert = $koneksi->prepare("INSERT INTO pengguna (username, password, level, nama) VALUES (:username, :password, :level, :nama)");
+        $q_insert->bindParam(':username', $username);
+        $q_insert->bindParam(':password', $hashed_password);
+        $q_insert->bindParam(':level', $level);
+        $q_insert->bindParam(':nama', $nama);
+
+        if ($q_insert->execute()) {
+            $_SESSION['pesan'] = true;
+            header('Location: ./manajemen-pengguna.php');
+            exit(); // Penting untuk menghentikan eksekusi script setelah header redirect
+        } else {
+            $_SESSION['pesan_gagal'] = true;
+            header('Location: ./manajemen-pengguna.php');
+            exit(); // Penting untuk menghentikan eksekusi script setelah header redirect
+        }
     }
 }
 ?>
