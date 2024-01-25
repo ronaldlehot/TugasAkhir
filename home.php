@@ -5,18 +5,6 @@ include_once 'header1.php';
 
 
 
-if(isset($_SESSION['login_success'])){
-    echo "<script>
-    swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Login Berhasil',
-            showConfirmButton: false,
-            timer: 1500
-    });
-    </script>";
-    unset($_SESSION['login_success']);
-}
 
 
 ?>
@@ -174,4 +162,18 @@ function topFunction() {
 }
 </script>
 
-<?php include_once 'footer.php'; ?>
+<?php include_once 'footer.php'; 
+if(isset($_SESSION['login_success'])){
+    echo "<script>
+    swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Login Berhasil',
+            showConfirmButton: false,
+            timer: 1500
+    });
+    </script>";
+    unset($_SESSION['login_success']);
+}
+
+?>

@@ -36,6 +36,7 @@ include_once 'header1.php';
         <h5>Data Alternatif</h5>
     </div>
     <div class="col-md-6 text-right">
+        <!-- <button onclick="location.href='upload-data-alternatif.php'" class="btn btn-success">Upload Data</button> -->
         <button onclick="location.href='tambah-alternatif.php'" class="btn btn-success">Tambah Data</button>
     </div>
 </div>
