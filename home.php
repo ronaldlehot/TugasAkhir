@@ -100,7 +100,6 @@ if(isset($_SESSION['login_success'])){
     </div>
 </div>
 
-
 <script>
     var chart1; // globally available
     $(document).ready(function() {
@@ -110,7 +109,7 @@ if(isset($_SESSION['login_success'])){
                 type: 'column'
             },
             title: {
-                text: 'Grafik Perangkingan '
+                text: 'Grafik Perangkingan'
             },
             xAxis: {
                 categories: ['Alternatif']
@@ -121,32 +120,36 @@ if(isset($_SESSION['login_success'])){
                 }
             },
             series: [
-            
-                //ambii data  alternatif  berdasarkan hasil akhir dari taeble histori
+                // Ambil data alternatif berdasarkan hasil akhir dari tabel nilai_alternatif
                 <?php
-                $q = $koneksi->prepare("SELECT * FROM alternatif");
+                $q = $koneksi->prepare("SELECT DISTINCT alternatif FROM nilai_alternatif");
                 $q->execute();
                 $data = $q->fetchAll();
                 foreach ($data as $x) {
-                    $id = $x[0];
-                    $nama = $x[1];
-                    $q = $koneksi->prepare("SELECT * FROM histori WHERE alternatif='$id'");
-                    $q->execute();
-                    $data = $q->fetchAll();
-                    $hasil_akhir = $data[0][3];
-                    echo "{name: '$nama',data: [$hasil_akhir]},";
+                    $alternatif_id = $x['alternatif'];
+                    
+                    // Ambil nama alternatif dari tabel alternatif
+                    $alternatif_q = $koneksi->prepare("SELECT nama FROM alternatif WHERE id = :id");
+                    $alternatif_q->bindParam(':id', $alternatif_id);
+                    $alternatif_q->execute();
+                    $alternatif_data = $alternatif_q->fetch();
+                    $nama = $alternatif_data['nama'];
+
+                    // Ambil nilai hasil akhir dari tabel nilai_alternatif
+                    $hasil_akhir_q = $koneksi->prepare("SELECT SUM(nilai) as hasil_akhir FROM nilai_alternatif WHERE alternatif = :alternatif_id");
+                    $hasil_akhir_q->bindParam(':alternatif_id', $alternatif_id);
+                    $hasil_akhir_q->execute();
+                    $hasil_akhir_data = $hasil_akhir_q->fetch();
+                    $hasil_akhir = $hasil_akhir_data['hasil_akhir'];
+
+                    echo "{name: '$nama', data: [$hasil_akhir]},";
                 }
                 ?>
-               
-                
-               
-            
-            
-               
             ]
         });
     });
 </script>
+
 
 <!-- Tombol Kembali ke Atas -->
 <button onclick="topFunction()" id="btnBackToTop" title="Kembali ke Atas">&#8679;</button>

@@ -65,7 +65,7 @@ function createPDF($data) {
     // Isi tabel
     foreach ($data as $row) {
         $pdf->Cell(30, 7, $row['peringkat'], 1);
-        $pdf->Cell(60, 7, $row['alternatif']['nama'], 1);
+        $pdf->Cell(60, 7, $row['nama_alternatif'], 1);
         $pdf->Cell(40, 7, $row['periode'], 1);
         $pdf->Cell(40, 7, $row['hasil_akhir'], 1);
         $pdf->Ln();

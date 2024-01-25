@@ -4,16 +4,22 @@ ob_start();
 include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-
 if (!empty($_POST)) {
     global $koneksi;
-  
+
     // Periksa apakah nilai yang dibutuhkan ada dalam $_POST
-    if (isset($_POST['alternatif']) && isset($_POST['kriteria']) && isset($_POST['periode']) ) {
+    if (isset($_POST['alternatif']) && isset($_POST['kriteria']) && isset($_POST['periode'])) {
         $alternatif = $_POST['alternatif'];
         $kriteria = $_POST['kriteria'];
         $id_kriteria = $_POST['id_kriteria'];
         $periode = $_POST['periode'];
+
+        // Ambil nama alternatif dari database
+        $nama_alternatif_sql = "SELECT nama FROM alternatif WHERE id = :id_alternatif";
+        $nama_alternatif_stmt = $koneksi->prepare($nama_alternatif_sql);
+        $nama_alternatif_stmt->bindParam(':id_alternatif', $alternatif);
+        $nama_alternatif_stmt->execute();
+        $nama_alternatif = $nama_alternatif_stmt->fetchColumn();
 
         foreach ($id_kriteria as $key => $value) {
             // Lakukan pemeriksaan untuk memastikan data belum ada sebelumnya
@@ -36,15 +42,15 @@ if (!empty($_POST)) {
                 'periode' => $periode // Tambahkan nilai periode ke dalam data yang akan disimpan
             );
 
-            //ambil data id alternatif dan periode dari array data dan simpan ke tabel histori
-            $alternatif = $data['id_alternatif'];
-            $periode = $data['periode'];
-            $sql = "INSERT INTO histori (alternatif, periode) VALUES (:id_alternatif, :periode)";
+            // Simpan nama alternatif ke tabel histori
+            $sql = "INSERT INTO histori (alternatif, nama_alternatif, periode) VALUES (:id_alternatif, :nama_alternatif, :periode)";
             $stmt = $koneksi->prepare($sql);
             $stmt->bindParam(':id_alternatif', $alternatif);
+            $stmt->bindParam(':nama_alternatif', $nama_alternatif);
             $stmt->bindParam(':periode', $periode);
             $stmt->execute();
 
+            // Simpan data ke tabel nilai_alternatif
             $sql = "INSERT INTO nilai_alternatif (alternatif, kriteria, nilai) VALUES (:id_alternatif, :id_kriteria, :nilai )";
             $stmt = $koneksi->prepare($sql);
             $stmt->bindParam(':id_alternatif', $data['id_alternatif']);
@@ -64,6 +70,7 @@ if (!empty($_POST)) {
         exit;
     }
 }
+
 ob_end_flush();
 ?>
 

@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
                         <?php foreach ($data as $row) : ?>
                             <tr>
                                 <td class="text-center"><?= $row['peringkat'] ?></td>
-                                <td><?= $row['alternatif']['nama'] ?></td>
+                                <td><?= $row['nama_alternatif'] ?></td>
                                 <td><?= $row['periode'] ?></td>
                                 <td><?= $row['hasil_akhir'] ?></td>
                             </tr>
@@ -123,16 +123,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
 <script>
 
 function cetakPDF() {
+    // Pastikan $periode sudah didefinisikan dan memiliki nilai
+    var periode = '<?= isset($periode) ? htmlspecialchars($periode) : '' ?>';
+
+    // Encode nilai periode jika diperlukan
+    var encodedPeriode = encodeURIComponent(periode);
+
     // Kirim permintaan cetak PDF ke server
-    var url = 'cetak-pdf.php?periode=<?= $periode ?>';
+    var url = 'cetak-pdf.php?periode=' + encodedPeriode;
     window.open(url, '_blank'); // Menggunakan window.open untuk membuka URL dalam tab baru
 }
 
-function cetakWord() {
-    // Kirim permintaan cetak Word ke server
-    var url = 'cetak-word.php?periode=<?= $periode ?>';
-    window.open(url, '_blank'); // Menggunakan window.open untuk membuka URL dalam tab baru
-}
+
 </script>
 
 

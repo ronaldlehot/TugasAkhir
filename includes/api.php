@@ -168,3 +168,14 @@ function getPeriode($id) {
     $data = $q->fetch();
     return $data['periode'];
 }
+
+
+//fungsi untuk menampilkan nama alternatif dan hasil akhir pada tabel histori
+function getNamaAlternatif($id) {
+    global $koneksi;
+    $q = $koneksi->prepare("SELECT * FROM alternatif WHERE id = :id");
+    $q->bindParam(':id', $id);
+    $q->execute();
+    $data = $q->fetch();
+    return $data['nama'];
+}

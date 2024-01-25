@@ -1,4 +1,4 @@
-<?php 
+<?php
 ob_clean();  // Membersihkan isi output buffer sebelumnya (jika ada)
 ob_start();  // Memulai output buffering baru
 include './includes/session.php';
@@ -47,25 +47,31 @@ if (!empty($_FILES)) {
             $_nilai = str_replace(',', '.', $_nilai);
             $q = $koneksi->prepare("INSERT INTO nilai_alternatif VALUE ('$_next_id', '{$x[0]}', '$_nilai')");
             $q->execute();
-
-         
         }
 
-           //simpan id alternatif dan periode ke tabel histori
-           $alternatif = $_next_id;
-           $periode = date('Y');
-           $sql = "INSERT INTO histori (alternatif, periode) VALUES (:id_alternatif, :periode)";
-           $stmt = $koneksi->prepare($sql);
-           $stmt->bindParam(':id_alternatif', $alternatif);
-           $stmt->bindParam(':periode', $periode);
-           
-            // Jika berhasil
-            if ($stmt->execute()) {
-                $_SESSION['pesan'] = true;
-            } 
-            else {
-                $_SESSION['pesan'] = false;
-            }
+        //simpan id alternatif dan periode ke tabel histori
+        $alternatif = $_next_id;
+        $nama_alternatif = $_nama;
+        $periode = date('Y');
+        // hapus data histori sebelumnya jika ada data histori dengan nama alternatif dan periode yang sama
+        $q = $koneksi->prepare("DELETE FROM histori WHERE nama_alternatif = :nama_alternatif AND periode = :periode");
+        $q->bindParam(':nama_alternatif', $nama_alternatif);
+        $q->bindParam(':periode', $periode);
+        $q->execute();
+
+        $sql = "INSERT INTO histori (alternatif, nama_alternatif, periode) VALUES (:alternatif, :nama_alternatif, :periode)";
+        $stmt = $koneksi->prepare($sql);
+        $stmt->bindParam(':alternatif', $alternatif);
+        $stmt->bindParam(':nama_alternatif', $nama_alternatif);
+        $stmt->bindParam(':periode', $periode);
+
+
+        // Jika berhasil
+        if ($stmt->execute()) {
+            $_SESSION['pesan'] = true;
+        } else {
+            $_SESSION['pesan'] = false;
+        }
         $q = $koneksi->prepare("DELETE FROM tanggapan WHERE 1"); //hapus tanggapan
         $q->execute();
     }
@@ -73,7 +79,7 @@ if (!empty($_FILES)) {
 } else {
     include 'header1.php';
     ob_end_flush();
-    ?>
+?>
     <h5><span class="fas fa-upload"></span> Upload Data Alternatif</h5>
     <hr>
     <form enctype="multipart/form-data" method="post" id="form-upload-data-siswa">
@@ -81,7 +87,7 @@ if (!empty($_FILES)) {
             <input class="custom-file-input" name="file" id="file" required type="file" accept=".xls,.xlsx">
             <label class="custom-file-label" for="file">File Excel</label>
         </div>
-       
+
         <a href="./upload/contoh-data-alternatif.xlsx" class="btn btn-success mb-2 mr-sm-2"><span class="fas fa-download"></span> Download Contoh File Excel</a>
         <div class="form-group row">
             <label for="nama" class="col-sm-3 col-form-label">Kolom Nama Alternatif:</label>
@@ -107,7 +113,7 @@ if (!empty($_FILES)) {
         <?php $k++;
         } ?>
         <button class="btn btn-danger" id="upload" type="submit"><span class="fas fa-upload"></span> Upload</button>
-       
+
         <button onclick="location.href='alternatif.php'" class="btn btn-danger">Kembali</button>
     </form>
 <?php }
