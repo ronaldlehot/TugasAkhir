@@ -1,8 +1,10 @@
 <?php
-
+ob_clean() ; // Menghapus semua data yang ada di output buffer
+ob_start(); // Memulai output buffering baru
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 
 
 if (!empty($_GET)) {
@@ -40,12 +42,22 @@ if (!empty($_POST)) {
     if (empty($pesan_error)) {
         if ($password!='') $q = $koneksi->prepare("UPDATE pengguna SET username='$username', password=SHA2('$password', 0), level='$level', nama='$nama' WHERE username='{$_GET['username']}'");
         else $q = $koneksi->prepare("UPDATE pengguna SET username='$username', level='$level', nama='$nama' WHERE username='{$_GET['username']}'");
-        $q->execute();
+       
+
+        if($q->execute()){
+            $_SESSION['pesan_sukses'] = true;
+            header('Location: ./manajemen-pengguna.php');
+            exit;
+        }else{
+            $_SESSION['pesan_gagal_diubah'] = true;
+            header('Location: ./manajemen-pengguna.php');
+            exit;
+        }
         
         header('Location: ./manajemen-pengguna.php');
     }
 }
-
+ob_end_flush();
 ?>
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-8">
@@ -79,7 +91,7 @@ if (!empty($_POST)) {
                 </select>
 
             </div>
-            <button type="submit" onclick="showAlert()" class="btn btn-success">Ubah</button>
+            <button type="submit"  class="btn btn-success">Ubah</button>
             <button type="button" onclick="location.href='manajemen-pengguna.php'" class="btn btn-success">Kembali</button>
             <?php if (!empty($pesan_error)) {
                 echo '<hr><div class="alert alert-dismissable alert-danger"><ul>';
@@ -95,12 +107,6 @@ if (!empty($_POST)) {
    
 </div>
 
-<script>
-        // Menampilkan alert ketika tombol "Ubah" ditekan
-        function showAlert() {
-            alert("Data telah berhasil diubah, silahkan tekan tombol ok untuk kembali ke halaman manajemen pengguna");
-        }
-    </script>
 <?php
 include_once 'footer.php';
 ?>

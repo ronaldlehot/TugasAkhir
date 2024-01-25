@@ -1,5 +1,6 @@
-<?php include_once'./includes/api.php';
+<?php 
 include_once'./includes/session.php';
+include_once'./includes/api.php';
 include_once'header1.php';
 ?>
 

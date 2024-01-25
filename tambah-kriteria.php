@@ -1,8 +1,10 @@
-
 <?php
+ob_clean() ; // Menghapus semua data yang ada di output buffer
+ob_start();
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 
 $pesan = "";
 if (!empty($_POST)) {
@@ -26,6 +28,7 @@ if (!empty($_POST)) {
         $q->bindParam(':nama', $nama);
         $q->bindParam(':atribut', $atribut);
 
+
         if ($q->execute()) {
             $_SESSION['pesan'] = true;
             header("Location: data-kriteria.php");
@@ -37,6 +40,7 @@ if (!empty($_POST)) {
         }
     }
 }
+ob_end_flush();
 ?>
 
 <div class="container">

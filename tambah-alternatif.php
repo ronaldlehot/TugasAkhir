@@ -1,8 +1,10 @@
 <?php
-
+ob_clean();  // Membersihkan isi output buffer sebelumnya (jika ada)
+ob_start();  // Memulai output buffering baru
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 
 $pesan = "";
 if (!empty($_POST)) {
@@ -23,7 +25,7 @@ if (!empty($_POST)) {
     if (empty($pesan_error)) {
         $q = $koneksi->prepare("INSERT INTO alternatif VALUE (NULL, '$nama')");
         $q->bindParam(':nama', $nama);
-
+       
         if ($q->execute()) {
             $_SESSION['pesan']= true;
             header('Location: list-alternatif.php');
@@ -35,7 +37,7 @@ if (!empty($_POST)) {
         }
     }
 }
-
+ob_end_flush();
 ?>
 
 <div class="container">

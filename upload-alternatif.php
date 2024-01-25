@@ -1,6 +1,10 @@
-<?php include './includes/api.php';
-require_once "./PHPExcel-1.8/Classes/PHPExcel.php";
+<?php 
+ob_clean();  // Membersihkan isi output buffer sebelumnya (jika ada)
+ob_start();  // Memulai output buffering baru
 include './includes/session.php';
+include './includes/api.php';
+require_once "./PHPExcel-1.8/Classes/PHPExcel.php";
+
 
 
 if (!empty($_FILES)) {
@@ -54,7 +58,7 @@ if (!empty($_FILES)) {
            $stmt = $koneksi->prepare($sql);
            $stmt->bindParam(':id_alternatif', $alternatif);
            $stmt->bindParam(':periode', $periode);
-           $stmt->execute();
+           
             // Jika berhasil
             if ($stmt->execute()) {
                 $_SESSION['pesan'] = true;
@@ -67,7 +71,9 @@ if (!empty($_FILES)) {
     }
     header('Location: data-alternatif.php');
 } else {
-    include 'header1.php'; ?>
+    include 'header1.php';
+    ob_end_flush();
+    ?>
     <h5><span class="fas fa-upload"></span> Upload Data Alternatif</h5>
     <hr>
     <form enctype="multipart/form-data" method="post" id="form-upload-data-siswa">

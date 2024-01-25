@@ -1,8 +1,8 @@
 <?php
-
+include_once './includes/session.php';
 include_once './includes/api.php';
 
-include_once './includes/session.php';
+
 
 //hapus data alternatif berdasarkan id dan hapus juga data nilai alternatif berdasarkan id alternatif
 if (isset($_GET['id']) && !empty($_GET['id'])) {
@@ -15,7 +15,17 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
     $q = $koneksi->prepare("DELETE FROM alternatif WHERE id = :id");
     $q->bindParam(':id', $id);
-    $q->execute();
+    
+
+    if($q->execute()){
+        $_SESSION['pesan_sukses_dihapus'] = true;
+        header('Location: ./list-alternatif.php');
+        exit;
+    }else{
+        $_SESSION['pesan_gagal_dihapus'] = true;
+        header('Location: ./list-alternatif.php');
+        exit;
+    }
 
     header('Location: ./list-alternatif.php');
 } else {
@@ -24,4 +34,4 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
 ?>
 
-<?php include_once 'footer.php'; ?> -->
+<?php include_once 'footer.php'; ?> 

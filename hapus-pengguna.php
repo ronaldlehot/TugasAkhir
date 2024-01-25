@@ -1,5 +1,7 @@
-<?php include './includes/api.php';
+<?php 
 include './includes/session.php';
+include './includes/api.php';
+
 
 if (!empty($_GET['username'])) {
     $username = $_GET['username'];
@@ -10,12 +12,17 @@ if (!empty($_GET['username'])) {
 
     $q2 = $koneksi->prepare("DELETE FROM pengguna WHERE username = :username");
     $q2->bindParam(':username', $username);
-    $q2->execute();
+
+    if($q2->execute()){
+        $_SESSION['pesan_sukses_hapus'] = true;
+        header('Location: ./manajemen-pengguna.php');
+        exit;
+    }else{
+        $_SESSION['pesan_gagal_hapus'] = true;
+        header('Location: ./manajemen-pengguna.php');
+        exit;
+    }
 }
-
-// Tidak peduli kondisi, arahkan kembali ke halaman manajemen pengguna setelah selesai.
-header('Location: ./manajemen-pengguna.php');
-
 
 // if (!empty($_GET)) {
 //     @$username = $_GET['username'];

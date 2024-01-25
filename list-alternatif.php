@@ -1,8 +1,8 @@
 <?php
-
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 ?>
 <style>
 #btnBackToTop {
@@ -72,7 +72,7 @@ include_once './includes/session.php';
                 <!-- <td><?php echo $row['hasil_akhir'] ?></td> -->
                 <td class="text-center">
                     <a href="edit-listalternatif.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a href="hapus-listalternatif.php?id=<?php echo $row['id'] ?>" onclick="confirmAndAlert()" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    <a href="hapus-listalternatif.php?id=<?php echo $row['id'] ?>"  class="btn btn-danger" onclick="confirmDelete()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                 </td>
             </tr>
         <?php
@@ -105,24 +105,10 @@ function topFunction() {
     document.documentElement.scrollTop = 0; // Untuk Chrome, Firefox, IE, dan Opera
 }
 
-function confirmAndAlert() {
-    if (confirm('Apakah kamu yakin ingin menghapus data ini?')) {
-        showAlert();
-        return true;
-    } else {
-        return false;
-    }
+function confirmDelete() {
+    return confirm("Apakah Anda yakin ingin menghapus data ini?");
 }
 
-function showAlert() {
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Data Berhasil Dihapus',
-        showConfirmButton: false,
-        timer: 1500
-    });
-}
 
 </script>
 
@@ -132,7 +118,7 @@ function showAlert() {
 <?php
 include_once 'footer.php';
 
-
+// pesan ketika data berhasil ditambahkan
 if (isset($_SESSION['pesan'])) {
     echo "
         <script>
@@ -157,6 +143,60 @@ if (isset($_SESSION['pesan'])) {
             });
         </script>";
     unset($_SESSION['pesan_gagal']);
+}
+
+// pesan ketika data berhasil diubah
+if (isset($_SESSION['pesan_sukses'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_sukses']);
+} elseif (isset($_SESSION['pesan_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal']);
+}
+
+// pesan ketika data berhasil dihapus
+if (isset($_SESSION['pesan_sukses_dihapus'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Dihapus',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_sukses_dihapus']);
+} elseif (isset($_SESSION['pesan_gagal_dihapus'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Dihapus',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal_dihapus']);
 }
 
 ?>

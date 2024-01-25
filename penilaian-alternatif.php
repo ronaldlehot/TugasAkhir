@@ -1,8 +1,9 @@
 <?php
+ob_clean() ; // Menghapus semua data yang ada di output buffer
+ob_start(); 
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
-
 
 if (!empty($_POST)) {
     global $koneksi;
@@ -13,8 +14,6 @@ if (!empty($_POST)) {
         $kriteria = $_POST['kriteria'];
         $id_kriteria = $_POST['id_kriteria'];
         $periode = $_POST['periode'];
-      
-
 
         foreach ($id_kriteria as $key => $value) {
             // Lakukan pemeriksaan untuk memastikan data belum ada sebelumnya
@@ -24,7 +23,8 @@ if (!empty($_POST)) {
 
             // Jika data sudah ada, tampilkan alert dan hentikan proses penyimpanan
             if ($row['count'] > 0) {
-                echo "<script>alert('Data sudah ada!'); window.location='alternatif.php';</script>";
+                $_SESSION['pesan_sudah_ada'] = true;
+                header('Location: data-alternatif.php');
                 exit; // Hentikan proses penyimpanan
             }
 
@@ -34,7 +34,6 @@ if (!empty($_POST)) {
                 'id_kriteria' => $value,
                 'nilai' => $kriteria[$key],
                 'periode' => $periode // Tambahkan nilai periode ke dalam data yang akan disimpan
-
             );
 
             //ambil data id alternatif dan periode dari array data dan simpan ke tabel histori
@@ -51,23 +50,21 @@ if (!empty($_POST)) {
             $stmt->bindParam(':id_alternatif', $data['id_alternatif']);
             $stmt->bindParam(':id_kriteria', $data['id_kriteria']);
             $stmt->bindParam(':nilai', $data['nilai']);
-            $stmt->execute();
 
-          // Jika berhasil
-          if ($stmt->execute()) {
-            $_SESSION['pesan'] = true;
-        } else {
-            // Jika gagal
-            $_SESSION['pesan_gagal'] = true;
+            // Jika berhasil
+            if ($stmt->execute()) {
+                $_SESSION['pesan'] = true;
+            } else {
+                // Jika gagal
+                $_SESSION['pesan_gagal'] = true;
+            }
         }
-        }
+
         header('Location: data-alternatif.php');
+        exit;
     }
-
-    
 }
-
-
+ob_end_flush();
 ?>
 
 <div class="container">

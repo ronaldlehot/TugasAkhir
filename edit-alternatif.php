@@ -1,11 +1,11 @@
 <?php
-
-
+ob_clean() ; // Menghapus semua data yang ada di output buffer
+ob_start();
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
 
-$alertMessage = ""; // Variabel untuk menyimpan pesan alert
+
 // ambil id alternatif dari parameter
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];
@@ -35,7 +35,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $qNama->execute();
     $dataNama = $qNama->fetch();
     $alternatif = $dataNama['nama'];
-} else header('Location: ./alternatif.php');
+} else header('Location: ./data-alternatif.php');
 
 
 if (isset($_POST['update'])) {
@@ -60,16 +60,19 @@ if (isset($_POST['update'])) {
     $stmt = $koneksi->prepare($sql);
     $stmt->bindParam(':periode', $periode);
     $stmt->bindParam(':id', $id);
-    $stmt->execute();
-
-     // Set pesan alert
-     $alertMessage = "Update berhasil!";
-    
    
+    if ($stmt->execute()) {
+        $_SESSION['pesan_success'] = true;
+        header('Location: ./data-alternatif.php');
+    } else {
+        $_SESSION['pesan_gagal'] = true;
+        header('Location: ./data-alternatif.php');
+    }
+
 }
 
 
-
+ob_end_flush(); // Menghapus semua data yang ada di output buffer
 ?>
 
 
@@ -117,10 +120,19 @@ if (isset($_POST['update'])) {
                     <?php echo "<div class=\"form-group\">
                     <label for=\"periode\">Periode</label>
                     <select class=\"form-control\" name=\"periode\">";
-                       
+                     //panggil data periode dari database berdasarkan id alternatif yang dipilih serta buat perulangan untuk menampilkan data periode
+                    $q = $koneksi->prepare("SELECT * FROM histori WHERE alternatif = :id");
+                    $q->bindParam(':id', $id);
+                    $q->execute();
+                    $data = $q->fetch();
+                    $periode = $data['periode'];
                     for ($i = 2023; $i <= 2040; $i++) {
-                        echo "<option value=\"$i\">$i</option>";
+                        if ($periode == $i) $s = ' selected';
+                        else $s = '';
+                        echo "<option$s value=\"$i\">$i</option>";
                     }
+
+
                     
                     echo "</select>
                 </div>";
@@ -138,14 +150,7 @@ if (isset($_POST['update'])) {
 
 </div>
 
-<script>
-// Tampilkan alert jika $alertMessage tidak kosong
-if ("<?php echo $alertMessage; ?>" !== "") {
-    alert("<?php echo $alertMessage; ?>");
-    // Redirect ke halaman alternatif.php setelah menampilkan alert
-    window.location.href = './alternatif.php';
-}
-</script>
+
 
 
 <?php

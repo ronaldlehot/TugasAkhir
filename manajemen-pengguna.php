@@ -1,8 +1,8 @@
 <?php
-
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 
 ?>
 
@@ -46,24 +46,25 @@ include_once './includes/session.php';
     <tbody>
 
     <?php
-        $users = data_pengguna();
-        foreach ($users as $index => $user) {
-            $no = $index + 1;
-            echo "<tr>";
-            echo "<td class=\"text-center\">$no</td>
-                <td>{$user['username']}</td>
-                <td class=\"text-center\">{$user['keterangan']}</td>
-                <td>{$user['nama']}</td>
-                <td class=\"text-center\">
-                    <button onclick=\"location.href='./edit-pengguna.php?username={$user[0]}'\" class=\"btn btn-warning\">
-                        <span class=\"glyphicon glyphicon-pencil\"></span> 
-                    </button>
-                    <button onclick=\"hapusPengguna('{$user[0]}')\" class=\"btn btn-danger\" >
-                        <span class=\"glyphicon glyphicon-trash\"></span> 
-                    </button>
-                </td>";
-            echo '</tr>';
-        }
+       $users = data_pengguna();
+       foreach ($users as $index => $user) {
+           $no = $index + 1;
+           echo "<tr>";
+           echo "<td class=\"text-center\">$no</td>
+               <td>{$user['username']}</td>
+               <td class=\"text-center\">{$user['keterangan']}</td>
+               <td>{$user['nama']}</td>
+               <td class=\"text-center\">
+                   <button onclick=\"location.href='./edit-pengguna.php?username={$user['username']}'\" class=\"btn btn-warning\">
+                       <span class=\"glyphicon glyphicon-pencil\"></span> 
+                   </button>
+                   <button onclick=\"hapusPengguna('{$user['username']}')\" class=\"btn btn-danger\" >
+                       <span class=\"glyphicon glyphicon-trash\"></span> 
+                   </button>
+               </td>";
+           echo '</tr>';
+       }
+       
         ?>
 
 
@@ -74,9 +75,8 @@ include_once './includes/session.php';
 
 <script>
     function hapusPengguna(username) {
-        var confirmation = confirm('Apakah kamu yakin ingin menghapus data ini?');
-        if (confirmation) {
-            window.location.href = 'hapus-pengguna.php?username=' + username;
+        if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
+            location.href = './hapus-pengguna.php?username=' + username;
         }
     }
 </script>
@@ -107,6 +107,58 @@ if (isset($_SESSION['pesan'])) {
             });
         </script>";
     unset($_SESSION['pesan_gagal']);
+}
+
+if (isset($_SESSION['pesan_sukses'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_sukses']);
+} elseif (isset($_SESSION['pesan_gagal_diubah'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal_diubah']);
+}
+
+if (isset($_SESSION['pesan_sukses_hapus'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Dihapus',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_sukses_hapus']);
+} elseif (isset($_SESSION['pesan_gagal_hapus'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Dihapus',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal_hapus']);
 }
 
 ?>

@@ -1,5 +1,3 @@
-
-
 <?php
 include_once './includes/session.php';
 include_once './includes/api.php';
@@ -87,6 +85,48 @@ if (isset($_SESSION['pesan'])) {
     unset($_SESSION['pesan_gagal']);
 }
 
+
+if (isset($_SESSION['pesan_success'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_success']);
+} elseif (isset($_SESSION['pesan_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal']);
+}
+
+if (isset($_SESSION['pesan_sudah_ada'])) {
+    echo '
+        <script>
+        Swal.fire({
+            title: "Data yang dinilai sudah ada",
+            showClass: {
+                popup: "animate__animated animate__fadeInUp animate__faster"
+            },
+            hideClass: {
+                popup: "animate__animated animate__fadeOutDown animate__faster"
+            }
+        });
+        </script>';
+    unset($_SESSION['pesan_sudah_ada']);
+}
 ?>
 
 

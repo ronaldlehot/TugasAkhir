@@ -1,8 +1,10 @@
 <?php
-
+ob_clean(); // Menghapus semua data yang ada di output buffer 
+ob_start();
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 
 if (!empty($_POST)) {
     $username = $_POST['username'];
@@ -42,6 +44,7 @@ if (!empty($_POST)) {
         }
     }
 }
+ob_end_flush();
 ?>
 
 <!-- CSS untuk gaya notifikasi -->

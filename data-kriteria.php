@@ -1,8 +1,9 @@
 
 <?php
+include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
-include_once './includes/session.php';
+
 
 ?>
 
@@ -162,6 +163,57 @@ if (isset($_SESSION['pesan'])) {
     unset($_SESSION['pesan_gagal']);
 }
 
+if (isset($_SESSION['pesan_sukses_dihapus'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Dihapus',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_sukses_dihapus']);
+} elseif (isset($_SESSION['pesan_gagal_dihapus'])) {    
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Dihapus',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_gagal_dihapus']);
+}
+
+if (isset($_SESSION['pesan_ubah_sukses'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Data Berhasil Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_ubah_sukses']);
+} elseif (isset($_SESSION['pesan_ubah_gagal'])) {
+    echo "
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Data Gagal Diubah',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>";
+    unset($_SESSION['pesan_ubah_gagal']);
+}
  ?>
 
 

@@ -1,5 +1,9 @@
 <?php
 include_once './includes/api.php';
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -59,9 +63,6 @@ include_once './includes/api.php';
         }
     </style>
 </head>
-
-
-
 <body>
 
     <nav class="navbar">
@@ -83,8 +84,10 @@ include_once './includes/api.php';
                     <li><a href="home.php">Beranda</a></li>
                     <?php if (akses_pengguna(array(0))) : ?>
                         <li><a href="list-alternatif.php">Data Alternatif</a></li>
+                        <li><a href="laporan-alternatif.php">Laporan Alternatif</a></li>
                         <li><a href="manajemen-pengguna.php">Manajemen Pengguna</a></li>
                     <?php endif; ?>
+
 
                     <?php if (akses_pengguna(array(2))) : ?>
                         <li><a href="data-kriteria.php">Data Kriteria</a></li>
@@ -95,12 +98,13 @@ include_once './includes/api.php';
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></span>Analisa Alternatif <span class="caret"></span></a>
                             <ul class="dropdown-menu">
 
-                                <li><a href="data-alternatif.php">Analisa Alternatif</a></li>
-                                <li><a href="laporan-alternatif.php">Laporan Alternatif</a></li>
+                            <li><a href="data-alternatif.php">Analisa Alternatif</a></li>
+                            <li><a href="laporan-alternatif.php">Laporan Alternatif</a></li>
                             </ul>
                         </li>
                     <?php endif; ?>
 
+                    
 
 
 

@@ -1,6 +1,8 @@
 <?php
-include './includes/api.php';
-include './includes/session.php';
+ob_start();
+include_once './includes/session.php';
+include_once './includes/api.php';
+
 if (!empty($_POST)) {
     $pesan_error = array();
     $id = $_POST['id'];
@@ -9,9 +11,15 @@ if (!empty($_POST)) {
     $atribut = $_POST['atribut'];
     if (empty($pesan_error)) {
         $q = $koneksi->prepare("UPDATE kriteria SET nama='$nama', atribut='$atribut' WHERE id='$id'");
-        $q->execute();
-        ob_clean();
+        // Eksekusi query update
+        if ($q->execute()) {
+            $_SESSION['pesan_ubah_sukses'] = true;
+        } else {
+            $_SESSION['pesan_ubah_gagal'] = true;
+        }
+
         header('Location: ./data-kriteria.php');
+        exit();
     }
 } else if (!empty($_GET)) {
     @$id = $_GET['id'];
@@ -26,6 +34,7 @@ if (!empty($_POST)) {
 } else header('Location: ./data-kriteria.php');
 
 include 'header1.php';
+ob_end_flush(); 
 ?>
 <div class="row">
      <div class="col-xs-12 col-sm-12 col-md-8">       
