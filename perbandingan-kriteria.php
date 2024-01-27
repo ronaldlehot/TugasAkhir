@@ -171,8 +171,8 @@ if (!empty($_POST)) {
                 echo '</table>';
                 $t = 1/count($kriteria)*$jml;
                 echo 't = 1/'.count($kriteria).'*'.$jml.' = '.$t.'<br>';
-                $ci = ($t-count($kriteria))/(count($kriteria));
-                echo "CI = ($t-".count($kriteria).')/'.(count($kriteria)).' = '.$ci.'<br>';
+                $ci = ($t-count($kriteria))/(count($kriteria)-1);
+                echo "CI = ($t-".count($kriteria).')/'.(count($kriteria)- 1).' = '.$ci.'<br>';
                 $ri = array(
                     1 => 0,
                     2 => 0,
