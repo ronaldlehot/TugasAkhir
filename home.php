@@ -10,25 +10,25 @@ include_once 'header1.php';
 ?>
 
 <style>
-#btnBackToTop {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 99;
-    font-size: 18px;
-    border: none;
-    outline: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    padding: 15px;
-    border-radius: 5px;
-}
+    #btnBackToTop {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+        border-radius: 5px;
+    }
 
-#btnBackToTop:hover {
-    background-color: #0056b3;
-}
+    #btnBackToTop:hover {
+        background-color: #0056b3;
+    }
 </style>
 
 <div class="container">
@@ -45,12 +45,28 @@ include_once 'header1.php';
         </div>
     </div>
 </div>
+<form method="get" action="">
+    <label for="periode">Pilih Periode: </label>
+    <select id="periode" name="periode" onchange="this.form.submit()" style="width: 70px; height: 30px;">
+        <?php
+        // Ambil data periode yang tersedia
+        $q_periode = $koneksi->prepare("SELECT DISTINCT periode FROM histori");
+        $q_periode->execute();
+        $periodes = $q_periode->fetchAll(PDO::FETCH_COLUMN);
 
+        // Definisikan variabel $selected_periode
+        $selected_periode = isset($_GET['periode']) ? $_GET['periode'] : '';
+
+        foreach ($periodes as $p) : ?>
+            <option value="<?= $p ?>" <?= ($p == $selected_periode) ? 'selected' : '' ?>><?= $p ?></option>
+        <?php endforeach; ?>
+    </select>
+</form>
 
 <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <div class="row">
 
-    
+
     <div class="col-xs-12 col-sm-12 col-md-4">
         <div class="page-header">
             <h5>Kriteria-Kriteria</h5>
@@ -58,7 +74,7 @@ include_once 'header1.php';
         <div class="panel panel-default">
             <div class="panel-body">
                 <ol class="list-unstyled">
-                  
+
                     <?php
                     foreach (data_kriteria() as $x) {
                         echo "<li>{$x[1]} ({$x[5]})</li>";
@@ -68,7 +84,7 @@ include_once 'header1.php';
             </div>
         </div>
     </div>
-    
+
     <div class="col-xs-12 col-sm-12 col-md-4" style="float: right;">
         <div class="page-header">
             <h5>Alternatif </h5>
@@ -76,17 +92,19 @@ include_once 'header1.php';
         <div class="panel panel-default">
             <div class="panel-body">
                 <ol class="list-unstyled">
-                   
+
                     <?php
                     foreach (data_alternatif() as $x) {
                         echo "<li>{$x[1]}</li>";
-                    }   
+                    }
                     ?>
                 </ol>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <script>
     var chart1; // globally available
@@ -110,27 +128,31 @@ include_once 'header1.php';
             series: [
                 // Ambil data alternatif berdasarkan hasil akhir dari tabel nilai_alternatif
                 <?php
-                $q = $koneksi->prepare("SELECT DISTINCT alternatif FROM nilai_alternatif");
-                $q->execute();
-                $data = $q->fetchAll();
-                foreach ($data as $x) {
-                    $alternatif_id = $x['alternatif'];
-                    
-                    // Ambil nama alternatif dari tabel alternatif
-                    $alternatif_q = $koneksi->prepare("SELECT nama FROM alternatif WHERE id = :id");
-                    $alternatif_q->bindParam(':id', $alternatif_id);
-                    $alternatif_q->execute();
-                    $alternatif_data = $alternatif_q->fetch();
-                    $nama = $alternatif_data['nama'];
+                // Ambil data periode yang tersedia
+                $q_periode = $koneksi->prepare("SELECT DISTINCT periode FROM histori");
+                $q_periode->execute();
+                $periodes = $q_periode->fetchAll(PDO::FETCH_COLUMN);
 
-                    // Ambil nilai hasil akhir dari tabel nilai_alternatif
-                    $hasil_akhir_q = $koneksi->prepare("SELECT SUM(nilai) as hasil_akhir FROM nilai_alternatif WHERE alternatif = :alternatif_id");
-                    $hasil_akhir_q->bindParam(':alternatif_id', $alternatif_id);
-                    $hasil_akhir_q->execute();
-                    $hasil_akhir_data = $hasil_akhir_q->fetch();
-                    $hasil_akhir = $hasil_akhir_data['hasil_akhir'];
+                $selected_periode = isset($_GET['periode']) ? $_GET['periode'] : $periodes[0]; // Pilih periode pertama sebagai default
 
-                    echo "{name: '$nama', data: [$hasil_akhir]},";
+                // Ambil data alternatif berdasarkan hasil akhir dari tabel nilai_alternatif
+                $q = $koneksi->prepare("SELECT DISTINCT nama_alternatif FROM histori WHERE periode = ?");
+                $q->execute(array($selected_periode));
+                $q->setFetchMode(PDO::FETCH_NUM);
+
+                while ($r = $q->fetch()) {
+                    $nama_alternatif = $r[0];
+                    $q2 = $koneksi->prepare("SELECT hasil_akhir FROM histori WHERE nama_alternatif = ? AND periode = ?");
+                    $q2->execute(array($nama_alternatif, $selected_periode));
+                    $q2->setFetchMode(PDO::FETCH_NUM);
+                    $nilai = array();
+
+                    while ($r2 = $q2->fetch()) {
+                        $nilai[] = $r2[0];
+                    }
+
+                    $nilai = implode(",", $nilai);
+                    echo "{name: '{$nama_alternatif}', data: [{$nilai}]},";
                 }
                 ?>
             ]
@@ -143,27 +165,27 @@ include_once 'header1.php';
 <button onclick="topFunction()" id="btnBackToTop" title="Kembali ke Atas">&#8679;</button>
 
 <script>
-window.onscroll = function() {
-    scrollFunction();
-};
+    window.onscroll = function() {
+        scrollFunction();
+    };
 
-function scrollFunction() {
-    var btnBackToTop = document.getElementById("btnBackToTop");
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        btnBackToTop.style.display = "block";
-    } else {
-        btnBackToTop.style.display = "none";
+    function scrollFunction() {
+        var btnBackToTop = document.getElementById("btnBackToTop");
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            btnBackToTop.style.display = "block";
+        } else {
+            btnBackToTop.style.display = "none";
+        }
     }
-}
 
-function topFunction() {
-    document.body.scrollTop = 0; // Untuk Safari
-    document.documentElement.scrollTop = 0; // Untuk Chrome, Firefox, IE, dan Opera
-}
+    function topFunction() {
+        document.body.scrollTop = 0; // Untuk Safari
+        document.documentElement.scrollTop = 0; // Untuk Chrome, Firefox, IE, dan Opera
+    }
 </script>
 
-<?php include_once 'footer.php'; 
-if(isset($_SESSION['login_success'])){
+<?php include_once 'footer.php';
+if (isset($_SESSION['login_success'])) {
     echo "<script>
     swal.fire({
             position: 'top-end',

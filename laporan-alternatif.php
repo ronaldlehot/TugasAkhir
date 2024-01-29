@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
         }
         return ($a['hasil_akhir'] > $b['hasil_akhir']) ? -1 : 1;
     });
-    
+
 
     // Berikan peringkat berdasarkan urutan hasil akhir
     $peringkat = 1;
@@ -72,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
 
             <?php if (isset($_POST['cari'])) : ?>
                 <!-- Tombol Cetak PDF -->
-            <button type="button" class="btn btn-success" onclick="cetakPDF()">Cetak PDF</button>
-            <!-- Tombol Cetak Word -->
-            <!-- <button type="button" class="btn btn-success" onclick="cetakWord()">Cetak Word</button> -->
-            <br><br>
+                <button type="button" class="btn btn-success" onclick="cetakPDF()">Cetak PDF</button>
+                <!-- Tombol Cetak Word -->
+                <!-- <button type="button" class="btn btn-success" onclick="cetakWord()">Cetak Word</button> -->
+                <br><br>
 
                 <!-- Tampilkan tabel berdasarkan periode yang di-input user yakni atribut alternatif, periode, dan hasil_akhir -->
                 <table width="100%" class="table table-striped table-bordered" id="tabeldata">
@@ -121,24 +121,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
 
 <!-- Tambahkan script ini setelah tabel -->
 <script>
+    function cetakPDF() {
+        // Pastikan $periode sudah didefinisikan dan memiliki nilai
+        var periode = '<?= isset($periode) ? htmlspecialchars($periode) : '' ?>';
 
-function cetakPDF() {
-    // Pastikan $periode sudah didefinisikan dan memiliki nilai
-    var periode = '<?= isset($periode) ? htmlspecialchars($periode) : '' ?>';
+        // Encode nilai periode jika diperlukan
+        var encodedPeriode = encodeURIComponent(periode);
 
-    // Encode nilai periode jika diperlukan
-    var encodedPeriode = encodeURIComponent(periode);
-
-    // Kirim permintaan cetak PDF ke server
-    var url = 'cetak-pdf.php?periode=' + encodedPeriode;
-    window.open(url, '_blank'); // Menggunakan window.open untuk membuka URL dalam tab baru
-}
-
-
+        // Kirim permintaan cetak PDF ke server
+        var url = 'cetak-pdf.php?periode=' + encodedPeriode;
+        window.open(url, '_blank'); // Menggunakan window.open untuk membuka URL dalam tab baru
+    }
 </script>
 
 
 
 
 
-<?php include_once 'footer.php'; ?>
+<?php include_once 'footer.php';?>
