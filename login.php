@@ -1,7 +1,7 @@
-<?php 
+<?php
 session_start();
 include_once './includes/api.php';
-if(isset($_POST['username'])){
+if (isset($_POST['username'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $q = $koneksi->prepare("SELECT * FROM pengguna WHERE username='$username'");
@@ -15,7 +15,7 @@ if(isset($_POST['username'])){
             $uuid = @$q->fetchAll()[0][0];
             $q = $koneksi->prepare("INSERT INTO masuk VALUE ('$uuid', '$username')");
             $q->execute();
-            setcookie('masuk', $uuid, time()+3600*24*30*12);
+            setcookie('masuk', $uuid, time() + 3600 * 24 * 30 * 12);
             $_SESSION['login_success'] = true;
             header('Location: home.php');
         } else echo "<script>alert('password anda salah, silahkan login ulang !')</script>";
@@ -118,6 +118,7 @@ if(isset($_POST['username'])){
                             <div class="form-group mt-2">
                                 <label for="password" class="fw-light">Kata Sandi</label>
                                 <input type="password" class="form-control text-left bg-transparent  border p-2 py-2 mt-2 text-white " name="password" id="password">
+                                <input type="checkbox" onclick="myFunction()">Show Password
                             </div>
                             <div class="login mt-4">
                                 <button type="submit" class="button btn border text-white">Login</button>
@@ -130,6 +131,18 @@ if(isset($_POST['username'])){
         </div>
     </div>
 
+
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery-1.11.3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -137,4 +150,3 @@ if(isset($_POST['username'])){
 </body>
 
 </html>
-
