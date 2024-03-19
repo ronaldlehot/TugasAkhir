@@ -71,6 +71,8 @@
                 <div class="col-md-12 text-center">
                     <h1 class="text-white fw-light">Pemilihan Pegawai Terbaik <br> di <span class="fw-bold"> Puskemas Oesapa </span> Dengan Menggunakan Kombinasi Metode <span class="fw-bold"> AHP </span> dan <span class="fw-bold"> SAW </span></h1>
                     <a href="login.php" class="button btn border p-2 px-5 py-2 mt-4 fs-5 text-white">Mulai!</a>
+                    <br>
+                    <a href="pegawai.php" class="button btn border p-2 px-5 py-2 mt-4 fs-5 text-white"> Rangking!</a>
                     </center>
 
                 </div>
