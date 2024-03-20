@@ -52,7 +52,7 @@ if (!empty($_FILES)) {
         //simpan id alternatif dan periode ke tabel histori
         $alternatif = $_next_id;
         $nama_alternatif = $_nama;
-        $periode = date('Y');
+        $periode = date('Y-n ');
         // hapus data histori sebelumnya jika ada data histori dengan nama alternatif dan periode yang sama
         $q = $koneksi->prepare("DELETE FROM histori WHERE nama_alternatif = :nama_alternatif AND periode = :periode");
         $q->bindParam(':nama_alternatif', $nama_alternatif);

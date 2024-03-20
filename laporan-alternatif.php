@@ -61,14 +61,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
                     <label>Periode:</label>
                     <select class="form-control" name="periode">
                         <option></option>
-                        <?php for ($i = 2023; $i <= 2040; $i++) : ?>
-                            <option value="<?= $i ?>" <?= isset($_SESSION['search_periode']) && $_SESSION['search_periode'] == $i ? 'selected' : '' ?>><?= $i ?></option>
-                        <?php endfor; ?>
+                        <?php
+                        $periode = isset($_POST['periode']) ? $_POST['periode'] : '';
+                        for ($i = 1; $i <= 28; $i += 2) { // Iterasi setiap dua bulan (total 14 iterasi = 28 bulan)
+                            $year = 2024 + floor(($i - 1) / 12); // Menghitung tahun
+                            $month = ($i - 1) % 12 + 1; // Menghitung bulan
+                            $date = date("F Y", mktime(0, 0, 0, $month, 1, $year)); // Format bulan dan tahun
+                            $selected = ($periode == "$year-$month") ? 'selected' : ''; // Cek apakah opsi ini harus dipilih
+                            echo "<option $selected value=\"$year-$month\">$date</option>";
+                        }
+                        ?>
                     </select>
                     <br>
                     <button type="submit" class="btn btn-danger" name="cari">Cari</button>
                 </div>
             </form>
+
 
             <?php if (isset($_POST['cari'])) : ?>
                 <!-- Tombol Cetak PDF -->
@@ -138,4 +146,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
 
 
 
-<?php include_once 'footer.php';?>
+<?php include_once 'footer.php'; ?>

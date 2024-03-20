@@ -1,6 +1,6 @@
 <?php
-ob_clean() ; // Menghapus semua data yang ada di output buffer
-ob_start(); 
+ob_clean(); // Menghapus semua data yang ada di output buffer
+ob_start();
 include_once './includes/session.php';
 include_once './includes/api.php';
 include_once 'header1.php';
@@ -104,12 +104,18 @@ ob_end_flush();
                 <?php endforeach; ?>
 
                 <div class="form-group">
-                    <label >Periode</label>
+                    <label>Periode</label>
                     <select class="form-control" name="periode">
-                        <option>---</option>
-                        <?php for ($i = 2023; $i <= 2040; $i++) : ?>
-                            <option value="<?= $i ?>"><?= $i ?></option>
-                        <?php endfor; ?>
+                        <?php for ($i = 1; $i <= 28; $i += 2) { // 18 iterasi = 6 tahun (2023-2040)
+                            $year = 2023 + floor(($i - 1) / 12); // Menghitung tahun
+                            $month = ($i - 1) % 12 + 1; // Menghitung bulan
+                            $date = date("F Y", mktime(0, 0, 0, $month, 1, $year)); // Format bulan dan tahun
+                            if ($periode == "$year-$month") $s = ' selected';
+                            else $s = '';
+                            echo "<option$s value=\"$year-$month\">$date</option>";
+                        }
+
+                        ?>
                     </select>
                 </div>
 
