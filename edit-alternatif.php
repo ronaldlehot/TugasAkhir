@@ -126,15 +126,14 @@ ob_end_flush(); // Menghapus semua data yang ada di output buffer
                     $q->execute();
                     $data = $q->fetch();
                     $periode = $data['periode'];
-                    for ($i = 1; $i <= 28; $i += 2) { // 18 iterasi = 6 tahun (2023-2040)
+                    for ($i = 1; $i <= 28; $i += 1) { // 18 iterasi = 6 tahun (2023-2040)
                         $year = 2023 + floor(($i - 1) / 12); // Menghitung tahun
                         $month = ($i - 1) % 12 + 1; // Menghitung bulan
-                        $date = date("F Y", mktime(0, 0, 0, $month, 0, $year)); // Format bulan dan tahun
+                        $date = date("F Y", mktime(0, 0, 0, $month, 1, $year)); // Format bulan dan tahun
                         if ($periode == "$year-$month") $s = ' selected';
                         else $s = '';
                         echo "<option$s value=\"$year-$month\">$date</option>";
                     }
-                    
 
 
                     

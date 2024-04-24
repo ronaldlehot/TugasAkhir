@@ -93,7 +93,7 @@ ob_end_flush();
                     <div class="form-group">
                         <label for="kriteria<?= $x[0] ?>">Kriteria: <?= $x[1] ?></label>
                         <input type="hidden" name="id_kriteria[]" value="<?= $x[0] ?>">
-                        <select class="form-control" id="kriteria<?= $x[0] ?>" name="kriteria[]"> <!-- Ubah name menjadi "kriteria[]" untuk mendapatkan array -->
+                        <select class="form-control" id="kriteria<?= $x[0] ?>" name="kriteria[]"> 
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -101,13 +101,13 @@ ob_end_flush();
                             <option value="5">5</option>
                         </select>
                     </div>
-                <?php endforeach; ?>
+                <?php endforeach; ?> 
 
                 <div class="form-group">
                     <label>Periode</label>
                     <select class="form-control" name="periode">
                         <?php for ($i = 1; $i <= 28; $i += 2) { // 18 iterasi = 6 tahun (2023-2040)
-                            $year = 2023 + floor(($i - 1) / 12); // Menghitung tahun
+                            $year = 2024 + floor(($i - 1) / 12); // Menghitung tahun
                             $month = ($i - 1) % 12 + 1; // Menghitung bulan
                             $date = date("F Y", mktime(0, 0, 0, $month, 1, $year)); // Format bulan dan tahun
                             if ($periode == "$year-$month") $s = ' selected';

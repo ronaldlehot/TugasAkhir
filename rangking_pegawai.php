@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
                         <?php
                         $periode = isset($_POST['periode']) ? $_POST['periode'] : '';
                         for ($i = 1; $i <= 28; $i += 2) { // Iterasi setiap dua bulan (total 14 iterasi = 28 bulan)
-                            $year = 2024 + floor(($i - 1) / 12); // Menghitung tahun
+                            $year = 2023 + floor(($i - 1) / 12); // Menghitung tahun
                             $month = ($i - 1) % 12 + 1; // Menghitung bulan
                             $date = date("F Y", mktime(0, 0, 0, $month, 1, $year)); // Format bulan dan tahun
                             $selected = ($periode == "$year-$month") ? 'selected' : ''; // Cek apakah opsi ini harus dipilih

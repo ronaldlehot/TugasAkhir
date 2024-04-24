@@ -80,15 +80,18 @@ if (!empty($_FILES)) {
     include 'header1.php';
     ob_end_flush();
 ?>
+
     <h5><span class="fas fa-upload"></span> Upload Data Alternatif</h5>
     <hr>
     <form enctype="multipart/form-data" method="post" id="form-upload-data-siswa">
         <div class="custom-file mb-2 mr-sm-2">
             <input class="custom-file-input" name="file" id="file" required type="file" accept=".xls,.xlsx">
             <label class="custom-file-label" for="file">File Excel</label>
+           
         </div>
 
         <a href="./upload/contoh-data-alternatif.xlsx" class="btn btn-success mb-2 mr-sm-2"><span class="fas fa-download"></span> Download Contoh File Excel</a>
+        <i class="fas fa-clipboard fa-2x" id="clipboard-icon" style="margin-left: 3%; cursor: pointer;"></i>
         <div class="form-group row">
             <label for="nama" class="col-sm-3 col-form-label">Kolom Nama Alternatif:</label>
             <div class="col-sm-3">
@@ -98,7 +101,7 @@ if (!empty($_FILES)) {
         <div class="form-group row">
             <label for="baris" class="col-sm-3 col-form-label">Baris Mulai Data:</label>
             <div class="col-sm-3">
-                <input type="number" class="form-control" id="baris" name="baris" placeholder="Baris mulai data" value="2" required>
+                <input type="number" class="form-control" id="baris" name="baris" placeholder="Baris mulai data" value="7" required>
             </div>
         </div>
         <input type="hidden" name="abaikan">
@@ -118,3 +121,14 @@ if (!empty($_FILES)) {
     </form>
 <?php }
 include 'footer.php'; ?>
+
+<script>
+    // Menggunakan SweetAlert untuk menampilkan modal
+    document.getElementById("clipboard-icon").addEventListener("click", function() {
+        Swal.fire({
+            title: "CATATAN PENTING!",
+            text: "Untuk menghindari kesalahan, pastikan format file excel sesuai dengan contoh file excel yang telah disediakan dan form penilaian tidak boleh kosong dan tidak boleh ada angka nol. Jika terdapat kesalahan, silahkan hubungi admin.",
+            icon: "question"
+        });
+    });
+</script>
