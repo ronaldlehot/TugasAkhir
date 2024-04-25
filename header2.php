@@ -76,7 +76,7 @@ include_once './includes/api.php';
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="home.php"><img src="images/puskesmas.png" alt="" width="32" height="40 mb-3">SPK AHP dan SAW</a>
+                <a class="navbar-brand" href="home.php"><img src="images/puskesmas.png" alt="" width="58" height="50 mb-3">SPK AHP dan SAW</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

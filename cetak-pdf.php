@@ -50,22 +50,25 @@ function createPDF($data) {
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
 
-    // Judul
-    $pdf->Cell(170, 10, 'Laporan Pemilihan Pegawai Terbaik di Puskesmas Oesapa ' . $_GET['periode'], 0, 1, 'C');
+    // Judul PDF
+    $pdf->Cell(0, 10, 'Laporan Evaluatif Kinerja Pegawai', 0, 1, 'C');
+    $pdf->Cell(0, 10, 'Puskesmas Oesapa', 0, 1, 'C');
+    $pdf->Cell(0, 10, 'Periode ' . $_GET['periode'], 0, 1, 'C');
     $pdf->Ln(10);
+
 
     // Header tabel
     $pdf->SetFont('Arial', 'B', 12);
-    $pdf->Cell(30, 7, 'Peringkat', 1);
-    $pdf->Cell(60, 7, 'Nama', 1);
-    $pdf->Cell(40, 7, 'Periode', 1);
-    $pdf->Cell(40, 7, 'Hasil Akhir', 1);
+    $pdf->Cell(22, 7, 'Peringkat', 1, 0, 'C');
+    $pdf->Cell(95, 7, 'Nama', 1, 0, 'C');
+    $pdf->Cell(40, 7, 'Periode', 1, 0, 'C');
+    $pdf->Cell(40, 7, 'Hasil Akhir', 1, 0, 'C');
     $pdf->Ln();
 
     // Isi tabel
     foreach ($data as $row) {
-        $pdf->Cell(30, 7, $row['peringkat'], 1);
-        $pdf->Cell(60, 7, $row['nama_alternatif'], 1);
+        $pdf->Cell(22, 7, $row['peringkat'], 1);
+        $pdf->Cell(95, 7, $row['nama_alternatif'], 1);
         $pdf->Cell(40, 7, $row['periode'], 1);
         $pdf->Cell(40, 7, $row['hasil_akhir'], 1);
         $pdf->Ln();

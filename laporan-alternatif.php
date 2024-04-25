@@ -155,7 +155,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'])) {
 <!-- Tombol Kembali ke Atas -->
 <button onclick="topFunction()" id="btnBackToTop" title="Kembali ke Atas">&#8679;</button>
 
+<!-- Tambahkan script ini setelah tabel -->
 <script>
+    
 window.onscroll = function() {
     scrollFunction();
 };
@@ -174,10 +176,7 @@ function topFunction() {
     document.documentElement.scrollTop = 0; // Untuk Chrome, Firefox, IE, dan Opera
 }
 
-</script>
 
-<!-- Tambahkan script ini setelah tabel -->
-<script>
     function cetakPDF() {
         // Pastikan $periode sudah didefinisikan dan memiliki nilai
         var periode = '<?= isset($periode) ? htmlspecialchars($periode) : '' ?>';

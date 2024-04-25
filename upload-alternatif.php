@@ -91,7 +91,7 @@ if (!empty($_FILES)) {
         </div>
 
         <a href="./upload/contoh-data-alternatif.xlsx" class="btn btn-success mb-2 mr-sm-2"><span class="fas fa-download"></span> Download Contoh File Excel</a>
-        <i class="fas fa-clipboard fa-2x" id="clipboard-icon" style="margin-left: 3%; cursor: pointer;"></i>
+        <i class="fas fa-question fa-2x" id="clipboard-icon" style="margin-left: 3%;  cursor: pointer;"></i>
         <div class="form-group row">
             <label for="nama" class="col-sm-3 col-form-label">Kolom Nama Alternatif:</label>
             <div class="col-sm-3">
